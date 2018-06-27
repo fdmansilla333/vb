@@ -1,0 +1,42 @@
+<div class="panel panel-info" *ngFor="let d of detalles, let x= index">
+  <div class="panel-heading">
+    <h3 class="panel-title">Renglón - {{x+1}}</h3>
+  </div>
+  <div class="panel-body">
+
+    <form  #ventaForm="ngForm">
+
+      <div class="form-group" *ngIf="productos.length > 0">
+        <label for="nombre">Producto</label>
+
+        <ng-select placeholder="Seleccione un producto" [(ngModel)]="d.producto"
+          notFoundText="No existen productos activos, con el criterio" name="seleccionProducto" #seleccionProducto="ngModel" required
+          (change)="actualizarProducto(d)">
+          <ng-option *ngFor="let p of productos" [value]="p" [disabled]="!p.Activo" >{{p.Nombre}}</ng-option>
+        </ng-select>
+      </div>
+
+      <div class="form-group">
+        <label for="nombre">Cantidad</label>
+        <input type="number" name="cantidad" id="input${1/(\w+)/\u\1/g}" placeholder="Ingrese cantidad" class="form-control" min="1"
+         max={{d.cantidadMaxima}} required="required" title="Cantidad de productos" [(ngModel)]="d.cantidad" #cantidad="ngModel">
+      </div>
+   
+
+      <div class="form-group">
+        <label for="precioV">Precio venta</label>
+        <input type="number" min="0" class="form-control" name="precioV" placeholder="Ingrese el precio de venta" required [(ngModel)]="d.precioVenta">
+      </div>
+
+      <button type="button" (click)="quitarRenglon(x)" class="btn btn-danger">Quitar</button>
+      <button type="button" (click)="agregarRenglon()" [disabled]="ventaForm.invalid || d.generado" class="btn btn-success">Agregar</button>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+
+<button type="button" class="btn btn-primary" (click)="confirmar()" [disabled]="detalles.length === 0">Confirmar $ {{total}}</button>

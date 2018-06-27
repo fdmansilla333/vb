@@ -1,0 +1,13 @@
+<div class="input-group">
+    <input (keyup)=buscar() type="text" class="form-control" id="exampleInputAmount" placeholder="Buscar" name="patron" [(ngModel)]="patron">
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-default" (click)="buscar()">Buscar!</button>
+      <button type="button" class="btn btn-default" (click)="todos()">ver todos</button>
+    </span>
+  </div>
+  <div class="alert alert-info" *ngIf="cargando == true">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Cargando...</strong> Espere....
+  </div>
+  
+  <app-listado-productos [productos]="productos" *ngIf="productos?.length > 0"></app-listado-productos>

@@ -1,0 +1,62 @@
+<br>
+<br>
+<div class="input-group">
+  <input (keyup)=buscar() autofocus type="text" class="form-control" id="exampleInputAmount" placeholder="Buscar clientes"
+    name="patron" [(ngModel)]="patron">
+  <span class="input-group-btn">
+    <button type="button" class="btn btn-default" (click)="buscar()">Buscar!</button>
+  </span>
+</div>
+<div class="alert alert-info" *ngIf="cargando == true">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>Cargando...</strong> Espere....
+</div>
+
+
+<div class="row" *ngIf="clientes?.length > 0">
+  <div class="form-group">
+    <label for="input${1/(\w+)/\u\1/g}" class="col-sm-2 control-label">Clientes encontrados</label>
+    <div class="col-sm-4">
+      <select name="seleccionClientes" id="input${1/(\w+)/\u\1/g}" class="form-control" required [(ngModel)]="clienteSeleccionado"
+        (change)="buscarCupones()">
+        <option value="{{c._id}}" *ngFor="let c of clientes">{{c.Nombre}} - {{c.Apellido}}</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="facturasListas">
+  <div *ngFor="let f of facturas">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Factura - compra realizada el {{f.fecha_alta | date: 'dd/MM/yyyy'}}</h3>
+      </div>
+      <div class="panel-body">
+
+        <div class="well">
+          Total ${{f.total}} - Cantidad de cuotas {{f.cantidadCuotas}}
+          <a target="_blank" href="{{rutaReporte}}reporteFactura/{{f._id}}">
+            <button type="button" class="btn btn-default">ver factura</button>
+          </a>
+        </div>
+
+        <ul class="list-group" *ngFor="let c of f?.cupones">
+          <li class="list-group-item">
+            <span>
+              N°: {{c.numeroCuota}} - importe: ${{c.importeCuota.toFixed(2)}} fecha vencimiento: {{c.fechaVencimiento | date: 'dd/MM/yyyy'}}
+              <button type="button" class="btn btn-default" *ngIf="!c.pagada" (click)="pagar(c)">Pagar</button>
+              <a target="_blank" href="{{rutaReporte}}reporteComprobante/{{c._id}}"  *ngIf="c.pagada" >
+                <button type="button" class="btn btn-default" >ver comprobante</button>
+              </a>
+
+            </span>
+        
+          </li>
+          <div class="alert" *ngIf="presentaMora(c) && !c.pagada">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Presenta mora</strong> Este cupon puede presentar mora
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+2018-06-05T22:40:10.950Z - info: Initializing jsreport@2.1.0 in development mode using configuration file: jsreport.config.json
+2018-06-05T22:40:10.952Z - info: Searching for available extensions in C:\vestiteBien\
+2018-06-05T22:40:11.018Z - info: Extensions location cache not found, crawling directories
+2018-06-05T22:40:16.657Z - info: Found 31 extensions
+2018-06-05T22:40:16.714Z - debug: Writing extension locations cache to C:\Users\fdman\AppData\Local\Temp\jsreport\core\locations.json
+2018-06-05T22:40:16.716Z - debug: Discovered 31 extensions
+2018-06-05T22:40:17.299Z - info: Using extension handlebars
+2018-06-05T22:40:17.310Z - info: Using extension import-export
+2018-06-05T22:40:17.656Z - info: Using extension templates
+2018-06-05T22:40:17.666Z - info: Using extension jsrender
+2018-06-05T22:40:17.668Z - debug: Extension authentication is disabled, skipping
+2018-06-05T22:40:17.668Z - info: Using extension freeze
+2018-06-05T22:40:17.671Z - info: Using extension cli
+2018-06-05T22:40:17.673Z - info: Using extension express
+2018-06-05T22:40:18.084Z - info: Using extension debug
+2018-06-05T22:40:18.090Z - info: Using extension tags
+2018-06-05T22:40:18.101Z - info: Using extension data
+2018-06-05T22:40:18.109Z - info: Using extension fs-store
+2018-06-05T22:40:18.930Z - info: Using extension authorization
+2018-06-05T22:40:18.934Z - debug: Extension authorization was disabled
+2018-06-05T22:40:18.935Z - info: Using extension html-to-xlsx
+2018-06-05T22:40:19.405Z - info: html-to-xlsx detected chrome as available html engine
+2018-06-05T22:40:19.405Z - info: Using extension child-templates
+2018-06-05T22:40:19.417Z - info: Using extension browser-client
+2018-06-05T22:40:19.422Z - info: Using extension chrome-pdf
+2018-06-05T22:40:19.429Z - info: Using extension pdf-utils
+2018-06-05T22:40:19.675Z - info: Using extension version-control
+2018-06-05T22:40:19.752Z - info: Using extension reports
+2018-06-05T22:40:19.757Z - info: Using extension text
+2018-06-05T22:40:19.760Z - info: Using extension base
+2018-06-05T22:40:19.763Z - info: Using extension studio
+2018-06-05T22:40:19.864Z - info: Using extension licensing
+2018-06-05T22:40:19.994Z - info: Using extension scripts
+2018-06-05T22:40:20.004Z - info: Using extension assets
+2018-06-05T22:40:20.035Z - info: Using extension scheduling
+2018-06-05T22:40:20.137Z - info: Using extension xlsx
+2018-06-05T22:40:20.422Z - info: Using extension sample-template
+2018-06-05T22:40:20.426Z - info: Using extension resources
+2018-06-05T22:40:20.429Z - info: Using extension public-templates
+2018-06-05T22:40:20.433Z - debug: Extension public-templates was disabled
+2018-06-05T22:40:20.440Z - info: fs store is persisting using fs
+2018-06-05T22:40:20.441Z - info: fs store is synchronizing using fs
+2018-06-05T22:40:20.443Z - info: fs store is loading data
+2018-06-05T22:40:20.558Z - info: fs store is initialized successfully
+2018-06-05T22:40:20.586Z - info: Creating default express app.
+2018-06-05T22:40:20.654Z - info: jsreport server successfully started on http port: 5488
+2018-06-05T22:40:20.655Z - info: fs store emits sockets to synchronize underlying changes with studio
+2018-06-05T22:40:20.871Z - info: Verifying license key free
+2018-06-05T22:40:20.873Z - info: Using free license
+2018-06-05T22:40:20.986Z - debug: Inserting samples
+2018-06-05T22:40:21.001Z - debug: Inserting sample entity Population
+2018-06-05T22:40:21.026Z - debug: Inserting sample entity Invoice
+2018-06-05T22:40:21.041Z - debug: Inserting sample entity Population
+2018-06-05T22:40:21.058Z - debug: Inserting sample entity OrdersHeader
+2018-06-05T22:40:21.078Z - debug: Inserting sample entity Invoice
+2018-06-05T22:40:21.121Z - debug: Inserting sample entity Orders
+2018-06-05T22:40:21.175Z - debug: Inserting sample entity Invoice styles.css
+2018-06-05T22:40:21.203Z - debug: Inserting sample entity global helpers.js
+2018-06-05T22:40:21.231Z - debug: Inserting sample entity Invoice logo.png
+2018-06-05T22:40:21.255Z - debug: Inserting sample entity Orders
+2018-06-05T22:40:21.275Z - debug: Inserting sample entity Population
+2018-06-05T22:40:21.495Z - info: reporter initialized
+2018-06-05T22:40:47.960Z - debug: OData query on templates
+2018-06-05T22:40:47.973Z - debug: OData query on tags
+2018-06-05T22:40:47.976Z - debug: OData query on data
+2018-06-05T22:40:47.979Z - debug: OData query on scripts
+2018-06-05T22:40:47.987Z - debug: OData query on assets
+2018-06-05T22:40:47.990Z - debug: OData query on xlsxTemplates
+2018-06-05T22:40:48.018Z - debug: OData query on schedules
+2018-06-05T22:40:48.044Z - debug: OData query on settings
+2018-06-05T22:40:48.301Z - debug: OData query on templates
+2018-06-05T22:40:48.477Z - debug: OData query on settings
+2018-06-05T22:41:12.188Z - debug: OData query on data
+2018-06-05T22:41:12.201Z - debug: OData query on templates
+2018-06-05T22:41:12.403Z - debug: OData query on settings
+2018-06-05T22:41:13.711Z - debug: OData query on data
+2018-06-05T22:41:16.508Z - debug: OData query on templates
+2018-06-05T22:41:16.528Z - debug: OData query on settings
+2018-06-05T22:41:28.145Z - debug: OData query on xlsxTemplates
+2018-06-05T22:41:28.157Z - debug: OData query on templates
+2018-06-05T22:41:28.298Z - debug: OData query on settings
+2018-06-05T22:41:36.114Z - debug: OData query on templates
+2018-06-05T22:41:49.920Z - debug: OData query on templates
+2018-06-05T22:42:04.192Z - debug: OData query on templates
+2018-06-05T22:42:05.840Z - debug: OData query on templates

@@ -1,0 +1,86 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Generar la venta</h3>
+  </div>
+  <div class="panel-body">
+    
+    <div *ngIf="error" class="alert alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <strong>Hubo un error al dar de alta un venta</strong> Reintente nuevamente
+      {{errorMensaje}}
+    </div>
+    
+    <form (ngSubmit)="guardar()" *ngIf="detalles.length === 0">
+      <div class="form-group">
+        <label for="seleccionDeCliente">Seleccion de cliente</label>
+        <ng-select [items]="clientes"
+                 bindLabel="Nombre"
+                 bindValue="_id"
+                 placeholder="Seleccione un cliente"
+                 [(ngModel)]="clienteSeleccionado"
+                 notFoundText="No existen clientes activos, con el criterio"
+                 name="seleccionCliente" required>
+      </ng-select>
+      </div>
+      
+      
+      
+      
+    </form>
+    
+    <div class="row" *ngIf="detalles.length === 0">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <app-detalle-venta (detallesFinal)="finPedido($event)"></app-detalle-venta>
+      </div>
+    </div>
+
+    
+    <div class="row"  *ngIf="detalles.length > 0">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        
+        <table class="table table-condensed table-hover">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of detalles">
+              <td>{{d.producto?.Nombre}}</td>
+              <td>{{d.cantidad}}</td>
+              <td>{{d.precioVenta}}</td>
+              <td>{{d.precioVenta * d.cantidad}}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div class="well">
+          Total: $ {{total}} en {{cantCuotas}} cuota de ${{importeCuota}} (pesos)
+          <input type="number" width="10%" name="cantidadCuotas" id="input${1/(\w+)/\u\1/g}" class="form-control" value="1" min=1 max="12" step="1" 
+          required="required" title="Cantidad de cuotas" [(ngModel)]="cantCuotas" (change)="actualizarImporteCuota()">
+
+          
+          
+          <span class="label label-default">Complete el siguiente campo si realiza entrega:</span>
+                   
+          <input type="number" width="10%" name="entrega" id="input${1/(\w+)/\u\1/g}" class="form-control" value="1" min=1  step="0.01" 
+          required="required" title="entrega inicial" [(ngModel)]="entrega" (change)="actualizarImportePorEntrega()">
+          
+        </div>
+        
+        <button type="button" class="btn btn-danger" (click)="cancelarCompra()">Cancelar compra</button>
+        <button type="button" class="btn btn-success" (click)="generarCupones()">Comprar</button>
+        <button *ngIf="idFactura" type="button" class="btn btn-success" routerLink="/reporte/reporteFactura/{{idFactura}}" >Comprar</button>
+        
+      </div>
+    </div>
+    
+    
+  
+    
+    
+  </div>
+</div>

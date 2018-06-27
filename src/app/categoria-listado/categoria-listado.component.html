@@ -1,0 +1,33 @@
+
+<div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Fecha alta</th>
+          <th>Fecha baja</th>
+          <th>Activo?</th>
+          
+          <th colspan="2" align="center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of categorias">
+          <td>{{c.nombre}}</td>
+          <td>{{c.fecha_alta | date: 'dd/MM/yyyy'}}</td>
+          <td>{{c.fecha_baja | date: 'dd/MM/yyyy'}}</td>
+          <td *ngIf="c.activo" style="color:green">Activo</td>
+        <td *ngIf="!c.activo" style="color: red">Anulado</td>
+          
+          <td>
+            <a routerLink="modificar/{{c._id}}" title="Modificar categoria"><span class="glyphicon glyphicon-pencil"></span></a>
+          </td>
+          <td>
+            <a (click)="anular(c._id)" title="Anular categoria"><span class="glyphicon glyphicon-trash"></span></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  

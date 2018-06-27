@@ -1,0 +1,35 @@
+
+<div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Categoria</th>
+          <th>precioUnitario</th>
+          <th>precioVenta</th>
+          <th>Activo</th>
+          <th colspan="2" align="center">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of productos">
+          <td>{{p.Nombre}}</td>
+          <td>{{p.categoria}}</td>
+          <td>${{p.precioUnitario}}</td>
+          <td>${{p.precioVenta}}</td>
+          <td *ngIf="p.Activo" style="color:green">Activo</td>
+        <td *ngIf="!p.Activo" style="color: red">Anulado</td>
+        
+          <td>
+            <a routerLink="modificar/{{p._id}}" title="Modificar producto"><span class="glyphicon glyphicon-pencil"></span></a>
+          </td>
+          <td>
+            <a (click)="anular(p._id)" title="Anular producto"><span class="glyphicon glyphicon-trash"></span></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  
+  

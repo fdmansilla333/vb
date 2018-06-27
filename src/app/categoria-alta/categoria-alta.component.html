@@ -1,0 +1,24 @@
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Alta de categoria</h3>
+  </div>
+  <div class="panel-body">
+
+    <div *ngIf="error" class="alert alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <strong>Hubo un error al dar de alta una categoria</strong> Reintente nuevamente {{errorMensaje}}
+    </div>
+
+    <form (ngSubmit)="guardar()">
+
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" class="form-control" name="nombre" placeholder="Ingrese nombre" required [(ngModel)]="categoria.nombre"
+          #nombre="ngModel">
+      </div>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+
+
+  </div>
+</div>

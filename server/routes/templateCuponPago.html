@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <div class="header">
+        <span class="company-name">
+        <div align="center">
+            <h3 class="report-title">Comprobante de pago</h3>
+            <img class="logoIzquierda" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAeFBMVEX///8AAADKyspiYmJ/f3+ysrLs7OzU1NSrq6vp6ekcHBx8fHz09PSTk5NMTEx3d3eJiYlnZ2egoKCbm5vf39/Nzc3AwMBdXV3q6urz8/Pg4OBxcXEQEBA7OzsYGBhHR0cnJyctLS02Nja6urpBQUFVVVUiIiKvr68nCfYZAAAEwUlEQVR4nO2a6ZKqOhRGQVEcUBEUWtqhnZr3f8NrsndG+1ad01UE6tS3/rRACFnZOwOtUQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCV9XgIbHddCc5O+9EA2LdxV4bLtqua/5LzvKOKk1lHFf8tCxj+FhgGo2PDUTvpj3YawHAd90kawHCX9kkWwHAAwPDXsGFmYV1N5ZbKe/Yofz5ul7rc2ycz2n3pwx+rY5qivpwu48Kpt2vDlRn3x1uid8FneebTvuH+bUquTPNndOrg3Mj1fVZ2BR9jfWlr6Qc0FKzoYsOHVvlPp9xGn6/pxJ0Pz259V/PmMHIuNH0ZxoU8y4GJTfu2bjFjyCdUuBdefbHK3713fhrKMPdbJNOtdnxfFF4pbagb7gpbkEDmn16HMjzMnxSDnK1mdjtVMw50+JyqZNOGuoc43HM3GV885PkNHXzu05YTWY3R7leLUvX0Tn7YRvaQyWyPtSmvDfX0o8PNRbNGpbrI06lVKPui7gpmuNIhqFWXJ6+/x6NqnWo151tqG87FwdnJOtMZPF8JFerGC5XgzJ6GNxRi8TWiwOQPcZTLIiO70xvbsBV9QYP03ZC9xJWLk5gUxHt4w6X4cOPA7HPlq4oUlqGaOsUSd8l0MnqGB52mWlVCSb8KayjWJzmmal4rspHJzKetkN1fpJZOGV1NuB3D6MRdIzM7Pqln0wgdhzWsmt1W9Wwtm0iRmehGmxXMIEdUSum9+MGQtglJVMV24Dnr12ENNY0KTCQH4tYYHt4rWVHuVSbcriGl44aDlqjbKKSXfgy3HJgdXzh6hsuEWMp54kZ30Hhr3w1XbEhzkcrjXg0XGXX8t25H6hrqkqK5H+KDUL3ocA/dsBYr/HdsU0bOOHQMJ07J+N0w4exs+S/jrD6hDPOyLCfyWXO32Wutlb4Zetvx9M1wy53kzTQkvAxraN5mWrfZYuNG67UcZyVvMFdi7Ti6Jcs3Q0qHitPyETmPnIU1NO9JY7fZYiNCU6Jav3TCpV7Jh2/I27apv+KvrZD3YCgP5TdvFLpErQa8IMotV67vPMnvyKiAmYvIkJL0qp14n0Yr7TEKa6izVK4VN/mRQvClWs1TgzF8mEisVbhtQ96Wit1eoV0jM8OGNVTbMNqG8KwXq0tL+rR+fWzOyrCxMo9kan3TrboXD05eMT/zDlXONXddbRDDKqfp4pLLbeee8u0oDCqeVBaJer0zvK7n9CZb719pl9MGNN6OVv4w5g27elPeqKK1aki4/9PImVC9tYqON5fe/4uRm3Wj0BESB99eQW3iX9B7wHCGsq/VUnH0DP2l738Nr57IWD3PW2b1qBhKDNX2RFH9WQwX1lfpHydz/mj9PKFrw/tmSWzkRDjiw8S+RHuRVI+wp5z11X2v8ZuZSvKlJi9S95ETdvwq7bND+t4i293bSdX88O/6P2U6mrSVZzQkw27o2PAw7ZGPEIbPuE9CfAdcqHf2PtjMAxgOABj+GhgGA4a/5t//9eXsNoxf0M46+wXtv/8raAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMh/8A8YFLAVPYsyIAAAAASUVORK5CYII=">
+            
+        </div>   
+ 
+      
+    </div>
+    <img class="logo" style="width: 80px;" src="https://scontent.faep12-1.fna.fbcdn.net/v/t1.0-1/p200x200/17626298_1359830077416411_5935615244413680289_n.jpg?_nc_cat=0&oh=261d777001d7fc62ef0821036b6c2eb7&oe=5B7AB751">
+    <hr>
+  
+    <h3 class="report-title">Datos del cupón</h3>
+    <div align="center">
+        <label for="">Fecha de emisión: {{ @fecha_alta }}  - Fecha de vecimiento: {{ @fecha_vencimiento }} - fecha de pago {{@fecha_baja}} </label>
+        
+        <h4 align="center"><label for=""> Cuota paga N°: {{@numeroCuota}} - Importe pagado:    ${{@importeCuota}}</label></h4>
+        <hr>
+        <h4 align="center"><label for=""> Posee mora: {{@poseeMora}} - Dias transcurridos: {{@diasTranscurridos}} - Importe con mora: ${{@importeMora}}</label></h4>
+        <hr>
+        <h3><label for=""> El cliente debe pagar un total de ${{@total}}</label></h3>
+        <hr>
+
+    </div>
+   
+    
+ 
+
+ 
+    
+</body>
+
+</html>

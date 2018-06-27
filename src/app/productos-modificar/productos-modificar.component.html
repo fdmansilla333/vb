@@ -1,0 +1,41 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title">Alta de producto</h3>
+    </div>
+    <div class="panel-body">
+      
+      <div *ngIf="error" class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Hubo un error al dar de alta un producto</strong> Reintente nuevamente
+        {{errorMensaje}}
+      </div>
+      
+      <form (ngSubmit)="guardar()" >
+  
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" class="form-control" name="nombre" placeholder="Ingrese nombre" required [(ngModel)]="producto.Nombre"  #nombre="ngModel">
+        </div>
+  
+        <div class="form-group">
+          <label for="precioU">Precio unitario</label>
+          <input type="number" min="0" class="form-control" name="precioU" placeholder="Ingrese el precio unitario" required [(ngModel)]="producto.precioUnitario"> 
+        </div>
+  
+        <div class="form-group">
+          <label for="precioV">Precio venta</label>
+          <input type="number" min="0" class="form-control" name="precioV" placeholder="Ingrese el precio de venta" required [(ngModel)]="producto.precioVenta">
+        </div>
+
+        <div class="form-group">
+          <label for="activo">Activar</label>
+          <input type="checkbox" name="activo"[(ngModel)]="producto.Activo">
+        </div>
+  
+  
+        <button  type="submit" class="btn btn-primary">Guardar</button>
+      </form>
+      
+      
+    </div>
+  </div>

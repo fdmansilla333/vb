@@ -1,0 +1,38 @@
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Apellido</th>
+        <th>Nombre</th>
+        <th>Domicilio</th>
+        <th>Email</th>
+        <th>Teléfono</th>
+        <th>Fecha alta</th>
+        <th>Fecha baja</th>
+        <th>Activo?</th>
+        <th colspan="2" align="center">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of clientes">
+        <td>{{c.Apellido}}</td>
+        <td>{{c.Nombre}}</td>
+        <td>{{c.Domicilio}}</td>
+        <td>{{c.Email}}</td>
+        <td>{{c.Telefono}}</td>
+        <td>{{c.Fecha_alta | date: 'dd/MM/yyyy'}}</td>
+        <td>{{c.Fecha_baja | date: 'dd/MM/yyyy'}}</td>
+        <td *ngIf="c.Activo" style="color:green">Activo</td>
+        <td *ngIf="!c.Activo" style="color: red">Anulado</td>
+        <td>
+          <a routerLink="modificar/{{c._id}}" title="Modificar cliente"><span class="glyphicon glyphicon-pencil"></span></a>
+        </td>
+        <td>
+          <a (click)="anular(c._id)" title="Anular cliente"><span class="glyphicon glyphicon-trash"></span></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
