@@ -7,8 +7,9 @@
           <th>Categoria</th>
           <th>precioUnitario</th>
           <th>precioVenta</th>
+          <th>Stock</th>
           <th>Activo</th>
-          <th colspan="2" align="center">Opciones</th>
+          <th colspan="3" align="center">Opciones</th>
         </tr>
       </thead>
       <tbody>
@@ -17,19 +18,56 @@
           <td>{{p.categoria}}</td>
           <td>${{p.precioUnitario}}</td>
           <td>${{p.precioVenta}}</td>
+          <td>{{p.cantidad}}</td>
           <td *ngIf="p.Activo" style="color:green">Activo</td>
         <td *ngIf="!p.Activo" style="color: red">Anulado</td>
         
           <td>
             <a routerLink="modificar/{{p._id}}" title="Modificar producto"><span class="glyphicon glyphicon-pencil"></span></a>
           </td>
-          <td>
+          <td *ngIf="p.Activo">
             <a (click)="anular(p._id)" title="Anular producto"><span class="glyphicon glyphicon-trash"></span></a>
+          </td>
+          
+          <td *ngIf="!p.Activo">
+            
+          </td>
+          <td>
+            <a class="btn btn-primary" data-toggle="modal" href='#modal-id' (click)="completarModal(p)">Ver código de barra</a>
           </td>
         </tr>
       </tbody>
     </table>
 
   </div>
+
+  
+  
+  <div class="modal fade" id="modal-id">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Código de barra</h4>
+        </div>
+        
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="modal-body">
+              <ngx-barcode [bc-value]="fuenteCodigoBarra" [bc-display-value]="true" [bc-width]="1"></ngx-barcode>
+            </div>    
+          </div>
+        </div>
+        
+        
+        <div class="modal-footer" align="center">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  
   
   

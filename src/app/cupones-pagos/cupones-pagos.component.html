@@ -33,7 +33,7 @@
       <div class="panel-body">
 
         <div class="well">
-          Total ${{f.total}} - Cantidad de cuotas {{f.cantidadCuotas}}
+          Total ${{f.neto}} - Cantidad de cuotas {{f.cantidadCuotas}}
           <a target="_blank" href="{{rutaReporte}}reporteFactura/{{f._id}}">
             <button type="button" class="btn btn-default">ver factura</button>
           </a>
@@ -53,7 +53,7 @@
           </li>
           <div class="alert" *ngIf="presentaMora(c) && !c.pagada">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong>Presenta mora</strong> Este cupon puede presentar mora
+            <strong>Presenta mora</strong> Este cupon puede presentar mora con un importe de ${{mostrarMora(c)}}
           </div>
         </ul>
       </div>

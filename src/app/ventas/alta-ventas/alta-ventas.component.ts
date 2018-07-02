@@ -37,12 +37,22 @@ export class AltaVentasComponent implements OnInit {
   entrega = 0;
   cantCuotas = 1;
 
+  recargo = 0;
+  descuento = 0;
+
   constructor(public servicio: VentasService,
     public clienteService: ClientesService,
     private productoService: ProductosServicioService,
     private location: Location, protected router: Router) {
-    this.clienteService.obtenerClientes().subscribe(colClientes => this.clientes = colClientes);
-    this.productoService.obtenerTodos().subscribe(colProductos => this.productos = colProductos);
+    this.clienteService.obtenerClientes().subscribe(colClientes => {
+      this.clientes = colClientes.map(c => {
+        c.formateo = c.Nombre + ' ' + c.Apellido + ' ' + c.Telefono;
+        return c;
+      });
+    });
+    this.productoService.obtenerTodos().subscribe(colProductos => {
+
+    });
     this.detalles = new Array();
   }
 
@@ -78,7 +88,9 @@ export class AltaVentasComponent implements OnInit {
     this.detalles = [];
   }
   actualizarImporteCuota() {
-    this.importeCuota = Math.round((this.total - this.entrega) / this.cantCuotas);
+    let subtotal = this.total - (this.descuento / 100) * this.total + (this.recargo / 100) * this.total;
+    subtotal = subtotal - this.entrega;
+    this.importeCuota = Number((subtotal / this.cantCuotas).toFixed(2));
   }
   actualizarImportePorEntrega() {
     if (this.entrega > 0 && this.entrega <= this.total) {
@@ -102,7 +114,7 @@ export class AltaVentasComponent implements OnInit {
       this.modificarSaldo();
       // TODO generando los cupones de pago
       // TODO actualiza el saldo
-      alert('Venta realizada');
+      alert('Venta realizada!');
       this.router.navigate(['ventas']);
     }
 
@@ -127,7 +139,9 @@ export class AltaVentasComponent implements OnInit {
   generarFactura() {
     let factura = new Factura();
     factura.activo = true;
+    factura.entrega = this.entrega;
     factura.cantidadCuotas = this.cantCuotas;
+    factura.importeCuota = this.importeCuota;
     factura.clienteID = this.clienteSeleccionado;
     factura.detalles = this.detalles;
     factura.fecha_alta = new Date();
@@ -135,25 +149,31 @@ export class AltaVentasComponent implements OnInit {
     factura.pagoparcial = this.cantCuotas > 1 ? true : false;
     factura.cantidadDiasMoroso = this.diasMora;
     factura.total = this.total;
+    factura.recargo = this.recargo;
+    factura.descuento = this.descuento;
+    factura.neto = factura.total - (factura.descuento / 100) * factura.total + (factura.recargo / 100) * factura.total - this.entrega;
     this.servicio.guardarFactura(factura).subscribe(
       resultadoFactura => {
-        this.idFactura = resultadoFactura;
+        this.idFactura = resultadoFactura._id;
         // se obtiene la factura id y con ella se genera los cupones de pagos
         let cupones = [];
 
         let hoy = new Date();
+        // Se actualiza los productos (actualizar stock)
+        this.actualizarStock(resultadoFactura);
         for (let index = 1; index <= this.cantCuotas; index++) {
           let c = new CuponPago();
-          c.factura = resultadoFactura; // se asigna el id
+          c.factura = resultadoFactura._id; // se asigna el id
           c.fecha_alta = new Date();
           c.fecha_baja = null;
           c.numeroCuota = index;
           c.activo = true;
-          c.importeCuota = this.total / this.cantCuotas;
+          c.importeCuota = resultadoFactura.neto / this.cantCuotas;
           c.fechaVencimiento = hoy;
           c.fechaVencimiento.setMonth(c.fechaVencimiento.getMonth() + 1); // Se corre un mes
           hoy = c.fechaVencimiento;
           c.fechaVencimiento.setDate(c.fechaVencimiento.getDate() + factura.cantidadDiasMoroso); // se corren diez dias
+
           this.servicio.guardarCuponPago(c).subscribe(res => console.log(res));
         }
 
@@ -163,6 +183,17 @@ export class AltaVentasComponent implements OnInit {
 
   }
 
+  actualizarStock(f: Factura) {
+    if (f.detalles && f.detalles.length > 0) {
+      f.detalles.map(d => {
+        let producto: Producto = d.producto;
+        producto.cantidad = producto.cantidad - d.cantidad;
+        this.productoService.actualizarProducto(producto).subscribe(res => console.log(res));
+      });
+    }
+
+
+  }
   modificarSaldo() {
     this.servicio.modificarSaldoCliente(this.clienteSeleccionado, this.total).subscribe(res => console.log(res));
   }

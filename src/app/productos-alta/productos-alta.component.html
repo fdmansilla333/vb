@@ -10,7 +10,7 @@
         {{errorMensaje}}
       </div>
       
-      <form (ngSubmit)="guardar()" >
+      <form (ngSubmit)="guardar()" #formAltaProducto="ngForm">
   
         <div class="form-group">
           <label for="nombre">Nombre</label>
@@ -43,7 +43,7 @@
                    name="seleccionCategorias" required>
         </ng-select>
         </div>
-        <button  type="submit" class="btn btn-primary">Guardar</button>
+        <button  type="submit" class="btn btn-primary" [disabled]="!formAltaProducto.form.valid">Guardar</button>
       </form>
       
       

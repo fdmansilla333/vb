@@ -40,6 +40,8 @@ var cuponPagoSchema = mongoose.Schema({
     total: Number,
     activa: Boolean
 });
+
+
 //generacion de modelos
 var factura = mongoose.model('facturas', facturaSchema);
 var saldo = mongoose.model('saldo', saldoSchema);
@@ -176,6 +178,7 @@ router.get('/morosos', (req, res)=> {
         res.json(docs);
     });
 });
+
 
 
 

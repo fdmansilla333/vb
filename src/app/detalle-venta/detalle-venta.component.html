@@ -7,11 +7,12 @@
     <form  #ventaForm="ngForm">
 
       <div class="form-group" *ngIf="productos.length > 0">
+   
         <label for="nombre">Producto</label>
 
         <ng-select placeholder="Seleccione un producto" [(ngModel)]="d.producto"
           notFoundText="No existen productos activos, con el criterio" name="seleccionProducto" #seleccionProducto="ngModel" required
-          (change)="actualizarProducto(d)">
+          (change)="actualizarProducto(d)" required>
           <ng-option *ngFor="let p of productos" [value]="p" [disabled]="!p.Activo" >{{p.Nombre}}</ng-option>
         </ng-select>
       </div>
@@ -19,7 +20,7 @@
       <div class="form-group">
         <label for="nombre">Cantidad</label>
         <input type="number" name="cantidad" id="input${1/(\w+)/\u\1/g}" placeholder="Ingrese cantidad" class="form-control" min="1"
-         max={{d.cantidadMaxima}} required="required" title="Cantidad de productos" [(ngModel)]="d.cantidad" #cantidad="ngModel">
+         max={{d.cantidadMaxima}} required title="Cantidad de productos" [(ngModel)]="d.cantidad" #cantidad="ngModel">
       </div>
    
 

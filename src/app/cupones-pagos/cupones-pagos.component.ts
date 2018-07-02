@@ -108,7 +108,8 @@ export class CuponesPagosComponent implements OnInit {
       c.mora = true;
       c.importeMora = (1 / 100) * c.importeCuota * diferencia;
       c.diasTranscurridos = diferencia;
-      const acepta = confirm('El pago posee mora,  es de: $' + c.importeMora.toFixed(2) + ' con  ' + diferencia + ' dias transcurridos');
+      const acepta = confirm('El pago posee mora,  es de: $' + c.importeMora.toFixed(2) + ' con  ' + diferencia + ' dias transcurridos'
+       + 'acepta pagar la mora?');
       if (!acepta) {
         c.mora = false;
         c.importeMora = 0;
@@ -124,9 +125,16 @@ export class CuponesPagosComponent implements OnInit {
     let vencimiento: moment.Moment = moment(c.fechaVencimiento);
     const diferencia = hoy.diff(vencimiento, 'days');
     if (diferencia > 0) {
+
       return true;
     } else {
       return false;
     }
+  }
+  mostrarMora(c: CuponPago): Number {
+    let hoy: moment.Moment = moment(new Date());
+    let vencimiento: moment.Moment = moment(c.fechaVencimiento);
+    const diferencia = hoy.diff(vencimiento, 'days');
+    return diferencia * 0.01 * c.importeCuota;
   }
 }

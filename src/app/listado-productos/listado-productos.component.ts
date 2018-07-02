@@ -14,22 +14,30 @@ import { Location } from '@angular/common';
 export class ListadoProductosComponent implements OnInit {
   @Input() productos: Producto[];
 
-  constructor( private location: Location, protected servicio: CategoriaService, protected servicioProducto: ProductosServicioService) { }
+  fuenteCodigoBarra: any;
+
+  constructor(private location: Location, protected servicio: CategoriaService, protected servicioProducto: ProductosServicioService) { }
 
   ngOnInit() {
     this.productos.map(p => {
       const idCategoria = p.categoria.toString();
-    this.servicio.obtenerCategoriaPorId(idCategoria).subscribe(categoria => p.categoria = categoria.nombre);
+      this.servicio.obtenerCategoriaPorId(idCategoria).subscribe(categoria => p.categoria = categoria.nombre);
     }
     );
   }
 
   anular(id: string) {
-    let producto = new Producto();
-    producto._id = id;
-    producto.Activo = false;
-    producto.fecha_baja = new Date().toISOString();
-    this.servicioProducto.actualizarProducto(producto).subscribe(res => this.location.back());
+    if (confirm('¿Desea anular el producto?')) {
+      let producto = new Producto();
+      producto._id = id;
+      producto.Activo = false;
+      producto.fecha_baja = new Date().toISOString();
+      this.servicioProducto.actualizarProducto(producto).subscribe(res => this.location.back());
+    }
+
+  }
+  completarModal(p: Producto) {
+    this.fuenteCodigoBarra = p._id;
   }
 
 }

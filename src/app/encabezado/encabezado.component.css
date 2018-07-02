@@ -1,3 +1,8 @@
-body {
-    background-color: black;
+.navbar-default{
+    background-color: #175f5f;
+}
+
+.navbar-nav > li > a{
+    color: white;
+    font-weight: bold;
 }

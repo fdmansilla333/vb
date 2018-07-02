@@ -88,11 +88,20 @@ router.get('/reporteFactura/:id', (req, res) => {
 
 
                     AutoReportPDF.render('cantidadCuotas', factura.cantidadCuotas);
+                    AutoReportPDF.render('importeCuota', factura.importeCuota);
                     AutoReportPDF.render('nombre', cliente.Nombre);
                     AutoReportPDF.render('apellido', cliente.Apellido);
                     AutoReportPDF.render('domicilio', cliente.Domicilio);
                     AutoReportPDF.render('telefono', cliente.Telefono);
+                    AutoReportPDF.render('email', String(cliente.Email));
+                    AutoReportPDF.render('telefono', cliente.DNI);
                     AutoReportPDF.render('total', factura.total);
+                    AutoReportPDF.render('codigo', factura.codigo);
+
+                    AutoReportPDF.render('recargo', String(factura.recargo));
+                    AutoReportPDF.render('descuento', String(factura.descuento));
+                    AutoReportPDF.render('entrega', String(factura.entrega));
+                    AutoReportPDF.render('neto', factura.neto);
                     var facturafecha = dateFormat(factura.fecha_alta, "dd-mm-yyyy");
 
                     AutoReportPDF.render('fecha_alta', facturafecha);
@@ -151,9 +160,9 @@ router.get('/reporteComprobante/:id', (req, res) => {
                     AutoReportPDF.render('total', (cuponPago.importeMora + cuponPago.importeCuota).toFixed(2));
                 }else{
                     AutoReportPDF.render('poseeMora', 'No');
-                    AutoReportPDF.render('diasTranscurridos', 0);
-                    AutoReportPDF.render('importeMora', 0);
-                    AutoReportPDF.render('total', cuponPago.importeMora);
+                    AutoReportPDF.render('diasTranscurridos', String(0));
+                    AutoReportPDF.render('importeMora', String(0));
+                    AutoReportPDF.render('total', String(cuponPago.importeCuota.toFixed(2)));
                 }
 
                 

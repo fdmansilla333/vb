@@ -16,6 +16,9 @@ export class ClientesService {
   obtenerClientesPorNombre(nombre: string): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.app.urlBase + 'clientes?nombre=' + nombre);
   }
+  obtenerClientesPorTelefonoYDNI(numero: string): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(this.app.urlBase + 'clientes?numero=' + numero);
+  }
 
   obtenerClientePorId(id: string): Observable<Cliente> {
     return this.http.get<Cliente>(this.app.urlBase + 'clientes/' + id);

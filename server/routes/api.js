@@ -15,6 +15,8 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'vestiteBien';
 
 // Use connect method to connect to the server
+
+
 MongoClient.connect(url, function (err, client) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
@@ -46,6 +48,16 @@ router.get('/clientes', (req, res) => {
         });
     }
 
+    const buscarNumero = function (db, numero, callback) {
+        const collection = db.collection('clientes');
+        var consulta = [{ "Telefono": { $regex: ".*" + numero + ".*" } }, { "DNI": { $regex: ".*" + numero + ".*" } }];
+        var consultaOr = { $or: consulta };
+
+        collection.find(consultaOr).toArray(function (err, docs) {
+            res.json(docs);
+        });
+    }
+
     const findDocuments = function (db, callback) {
         const collection = db.collection('clientes');
         collection.find().toArray(function (err, docs) {
@@ -62,13 +74,23 @@ router.get('/clientes', (req, res) => {
             });
         });
     } else {
-        MongoClient.connect(url, function (err, client) {
-            assert.equal(null, err);
-            const db = client.db(dbName);
-            findDocuments(db, function () {
-                client.close();
+        if (req.query.numero) {
+            MongoClient.connect(url, function (err, client) {
+                assert.equal(null, err);
+                const db = client.db(dbName);
+                buscarNumero(db, req.query.numero, function () {
+                    client.close();
+                });
             });
-        });
+        } else {
+            MongoClient.connect(url, function (err, client) {
+                assert.equal(null, err);
+                const db = client.db(dbName);
+                findDocuments(db, function () {
+                    client.close();
+                });
+            });
+        }
     }
 
 });
@@ -521,11 +543,20 @@ router.get('/facturas/:cliente', (req, res) => {
 router.post('/facturas', (req, res) => {
     const insertDocuments = function (db, callback) {
         const collection = db.collection('facturas');
-        collection.insertOne(req.body, function (err, result) {
-            if (err) throw err;
-            console.log('Insertando:' + req.body);
-            res.json(req.body._id);
+        //Usada para las secuencias
+        
+       collection.count(function (err, count){
+            count = count + 1;
+            req.body.codigo = count;
+            collection.insertOne(req.body, function (err, result) {
+                if (err) throw err;
+    
+                res.json(req.body);
+            });
         });
+        
+
+      
     }
 
     MongoClient.connect(url, function (err, client) {

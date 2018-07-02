@@ -21,14 +21,20 @@ export class ClientesBusquedaComponent implements OnInit {
 
   buscar() {
     if (this.patron.length > 3) {
-      this.servicio.obtenerClientesPorNombre(this.patron).subscribe(colClientes => this.clientes = colClientes);
+
+      if (Number(this.patron)) {
+        this.servicio.obtenerClientesPorTelefonoYDNI(this.patron).subscribe(colClientes => this.clientes = colClientes);
+      } else {
+        this.servicio.obtenerClientesPorNombre(this.patron).subscribe(colClientes => this.clientes = colClientes);
+      }
+
     } else {
       this.clientes = [];
     }
   }
   todos() {
     this.cargando = true;
-    this.servicio.obtenerClientes().subscribe(colClientes => this.clientes = colClientes, null, () => {this.cargando = false; });
+    this.servicio.obtenerClientes().subscribe(colClientes => this.clientes = colClientes, null, () => { this.cargando = false; });
 
   }
 

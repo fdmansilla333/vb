@@ -2,7 +2,7 @@ import { Producto } from './producto';
 
 export class Renglon {
     public productoId: string;
-    public cantidad: number;
+    public cantidad: number = 1;
     public precioUnitario: number;
     public precioVenta: number;
     public _id: string;

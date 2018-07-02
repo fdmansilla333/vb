@@ -32,6 +32,10 @@ import { AltaVentasComponent } from './ventas/alta-ventas/alta-ventas.component'
 import { DetalleVentaComponent } from './detalle-venta/detalle-venta.component';
 import { CuponesPagosComponent } from './cupones-pagos/cupones-pagos.component';
 
+
+// Import ngx-barcode module
+import { NgxBarcodeModule } from 'ngx-barcode';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +68,8 @@ import { CuponesPagosComponent } from './cupones-pagos/cupones-pagos.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxBarcodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

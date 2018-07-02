@@ -13,9 +13,13 @@ export class Factura {
     public _id: string;
     public detalles: Renglon[];
     public total: number;
-
+    public recargo: number;
+    public descuento: number;
+    public neto = 0;
     /**calculado */
     public cliente: Cliente;
     public cupones: CuponPago[];
+  importeCuota: number;
+  entrega: number;
 
 }

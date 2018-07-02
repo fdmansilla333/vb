@@ -16,8 +16,8 @@ export class VentasService {
   obtenerFacturas(): Observable<Factura[]> {
     return this.http.get<Factura[]>(this.app.urlBase2 + 'facturas');
   }
-  guardarFactura(factura: Factura): Observable<any> {
-    return this.http.post(this.app.urlBase + 'facturas', factura);
+  guardarFactura(factura: Factura): Observable<Factura> {
+    return this.http.post<Factura>(this.app.urlBase + 'facturas', factura);
   }
 
   guardarCuponPago(cupon: CuponPago): Observable<any> {

@@ -12,9 +12,9 @@
     
     <form (ngSubmit)="guardar()" *ngIf="detalles.length === 0">
       <div class="form-group">
-        <label for="seleccionDeCliente">Seleccion de cliente</label>
+        <label for="seleccionDeCliente">Selección de cliente</label>
         <ng-select [items]="clientes"
-                 bindLabel="Nombre"
+                 bindLabel="formateo"
                  bindValue="_id"
                  placeholder="Seleccione un cliente"
                  [(ngModel)]="clienteSeleccionado"
@@ -50,15 +50,16 @@
           <tbody>
             <tr *ngFor="let d of detalles">
               <td>{{d.producto?.Nombre}}</td>
-              <td>{{d.cantidad}}</td>
-              <td>{{d.precioVenta}}</td>
-              <td>{{d.precioVenta * d.cantidad}}</td>
+              <td>{{d.cantidad}} unidad/es</td>
+              <td>${{d.precioVenta}}</td>
+              <td>${{d.precioVenta * d.cantidad}}</td>
             </tr>
           </tbody>
         </table>
         
         <div class="well">
-          Total: $ {{total}} en {{cantCuotas}} cuota de ${{importeCuota}} (pesos)
+          Total: $ {{total}}, con recargo de {{recargo}}% y descuento de {{descuento}}% en {{cantCuotas}} cuota de ${{importeCuota}} (pesos)
+          <span class="label label-default">Complete el siguiente campo para modificar las cuotas:</span>
           <input type="number" width="10%" name="cantidadCuotas" id="input${1/(\w+)/\u\1/g}" class="form-control" value="1" min=1 max="12" step="1" 
           required="required" title="Cantidad de cuotas" [(ngModel)]="cantCuotas" (change)="actualizarImporteCuota()">
 
@@ -69,10 +70,18 @@
           <input type="number" width="10%" name="entrega" id="input${1/(\w+)/\u\1/g}" class="form-control" value="1" min=1  step="0.01" 
           required="required" title="entrega inicial" [(ngModel)]="entrega" (change)="actualizarImportePorEntrega()">
           
+          <span class="label label-default">Complete el siguiente campo para agregar recargo:</span>
+          <input type="number" width="10%" name="recargo" id="input${1/(\w+)/\u\1/g}" class="form-control" value="0" min="0" max="100" step="1" 
+          required="required" title="Recargo sobre el total" [(ngModel)]="recargo" (change)="actualizarImporteCuota()">
+
+          <span class="label label-default">Complete el siguiente campo para agregar un descuento:</span>
+          <input type="number" width="10%" name="descuento" id="input${1/(\w+)/\u\1/g}" class="form-control" value="0" min="0" max="100" step="1" 
+          required="required" title="descuento" [(ngModel)]="descuento" (change)="actualizarImporteCuota()">
+
         </div>
         
-        <button type="button" class="btn btn-danger" (click)="cancelarCompra()">Cancelar compra</button>
-        <button type="button" class="btn btn-success" (click)="generarCupones()">Comprar</button>
+        <button type="button" class="btn btn-danger" (click)="cancelarCompra()">Cancelar venta</button>
+        <button type="button" class="btn btn-success" (click)="generarCupones()">Vender</button>
         <button *ngIf="idFactura" type="button" class="btn btn-success" routerLink="/reporte/reporteFactura/{{idFactura}}" >Comprar</button>
         
       </div>

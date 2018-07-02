@@ -6,18 +6,16 @@
 </head>
 
 <body>
-       
+
     <div class="header">
-            
-        <span class="company-name">
-                <img class="logo " src="{{ @logo_url }}" />
-            Vestite bien</span>
+
+
         <h3 class="report-title">Factura</h3>
         <br>
         <p class="derecha">Fecha: {{ @fecha_alta }}</p>
     </div>
 
-    <img class="logo" style="width: 80px;" src="https://scontent.faep12-1.fna.fbcdn.net/v/t1.0-1/p200x200/17626298_1359830077416411_5935615244413680289_n.jpg?_nc_cat=0&oh=261d777001d7fc62ef0821036b6c2eb7&oe=5B7AB751">
+
     <h3 class="report-title">Datos de facturación</h3>
 
     <label for="">Sarmiento 589</label>
@@ -26,27 +24,39 @@
     <br>
     <label for="">0280 455-8359</label>
     <br>
-    <label for="">Factura N° xxxxx</label>
+    <label for="">Factura N° {{@codigo}}</label>
     <br>
-   <hr>
+    <hr>
     <h3 class="report-title">Datos del cliente</h3>
+    <label for="input-id" class="col-sm-2">Nombre: {{@nombre}}</label>
+    <br>
+    <label for="input-id" class="col-sm-2">Apellido: {{@apellido}}</label>
+    <br>
+    <label for="input-id" class="col-sm-2">Dirección: {{@domicilio}}</label>
+    <br>
+    <label for="input-id" class="col-sm-2">Contacto: {{@telefono}}</label>
+    <br>
+
+    <label for="input-id" class="col-sm-2">Email: {{@email}}</label>
+    <br>
 
 
-    <label for="input-id" class="col-sm-2">Nombre: {{@nombre}}</label> <br>
-    <label for="input-id" class="col-sm-2">Apellido: {{@apellido}}</label> <br>
-    
-    <label for="input-id" class="col-sm-2">Dirección: {{@domicilio}}</label> <br>
-    
-    <label for="input-id" class="col-sm-2">Contacto: {{@contacto}} - {{@telefono}}</label> <br> 
-    
-    
     <hr>
     <h3 class="report-title">Detalle de compra</h3>
 
-    
+
     {{@detalles}}
-    <h5 class="report-title">Cantidad de cuotas: {{@cantidadCuotas}}</h5>
-    <h3 align="center">Total $ {{@total}}</h3>
+    <h5 class="report-title">Cantidad de cuotas: {{@cantidadCuotas}} - de ${{@importeCuota}}</h5>
+    <h5 class="report-title" >Descuento: {{@descuento}}% - Recargo: {{@recargo}}% - Importe bruto ${{@total}}</h5>
+    <h5 class="report-title">Hace entrega de: ${{@entrega}}</h5>
+    <h3 align="center">Total $ {{@neto}}</h3>
+    <br>
+    <br>
+    <hr>
+    <div align="center">
+        <img class="logo" src="https://scontent.faep12-1.fna.fbcdn.net/v/t1.0-1/p200x200/17626298_1359830077416411_5935615244413680289_n.jpg?_nc_cat=0&oh=261d777001d7fc62ef0821036b6c2eb7&oe=5B7AB751">
+    </div>
+
 </body>
 
 </html>

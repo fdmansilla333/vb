@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VentasService } from '../ventas/ventas.service';
+import { Cliente } from '../modelos/cliente';
 
 @Component({
   selector: 'app-clientes-morosos',
@@ -10,8 +11,11 @@ import { VentasService } from '../ventas/ventas.service';
 })
 export class ClientesMorososComponent implements OnInit {
 
-  Cliente;
-  constructor( protected servicio: VentasService) { }
+  cliente: Cliente;
+
+  constructor( protected servicio: VentasService) { 
+  
+  }
 
   ngOnInit() {
 

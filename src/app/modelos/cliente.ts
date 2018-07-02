@@ -1,7 +1,7 @@
 export class Cliente {
     public Nombre: string;
     public Apellido: string;
-    public DNI: number;
+    public DNI: string;
     public Email: string;
     public Telefono: string;
     public Domicilio: string;
@@ -9,4 +9,7 @@ export class Cliente {
     public Fecha_baja: Date;
     public Activo: boolean;
     public _id: string;
+
+    // para formatear
+    formateo: string = '';
 }
