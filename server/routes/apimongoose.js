@@ -25,7 +25,8 @@ var saldoSchema = mongoose.Schema({
 
 var clienteSchema = mongoose.Schema({
     nombre: String,
-    apellido: String
+    apellido: String,
+    DNI: String
 })
 
 var cuponPagoSchema = mongoose.Schema({
@@ -108,12 +109,12 @@ router.post('/saldos/:cliente', (req, res) => {
     }
 });
 router.get('/facturas', (req, res) => {
-
-    factura.find({}, function (err, docs) {
-        res.json(docs);
-    });
-
-
+    if (req.params.id){
+        factura.find({'_id': ObjectId(req.params.id)}, function (err, factura) {
+            if (err) return console.error(err);
+            res.json(factura);
+        });
+    }
 });
 router.get('/facturas/:termino', (req, res) => {
 
@@ -178,6 +179,8 @@ router.get('/morosos', (req, res)=> {
         res.json(docs);
     });
 });
+
+
 
 
 

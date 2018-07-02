@@ -46,4 +46,11 @@ export class VentasService {
   modificarCuponPago(cupon: CuponPago): Observable<any> {
     return this.http.put(this.app.urlBase2 + 'cuponesPagos/' + cupon._id, cupon);
   }
+
+  obtenerCuponesImpagos(): Observable <CuponPago[]> {
+    return this.http.get<CuponPago[]>(this.app.urlBase2 + 'morosos');
+  }
+  obtenerFacturaPorId(id: string): Observable <Factura> {
+    return this.http.get<Factura>(this.app.urlBase2 + 'facturas?id=' + id);
+  }
 }
