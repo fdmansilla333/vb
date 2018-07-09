@@ -151,33 +151,104 @@ router.get('/reporteComprobante/:id', (req, res) => {
                 const imagenPagado = 'file:///' + path.resolve(__dirname, 'pagado.png');
 
 
-                
+
                 AutoReportPDF.render('factura', cuponPago.factura);
-                if (cuponPago.mora){
+                if (cuponPago.mora) {
                     AutoReportPDF.render('poseeMora', 'Si');
                     AutoReportPDF.render('diasTranscurridos', cuponPago.diasTranscurridos);
                     AutoReportPDF.render('importeMora', cuponPago.importeMora.toFixed(2));
                     AutoReportPDF.render('total', (cuponPago.importeMora + cuponPago.importeCuota).toFixed(2));
-                }else{
+                } else {
                     AutoReportPDF.render('poseeMora', 'No');
                     AutoReportPDF.render('diasTranscurridos', String(0));
                     AutoReportPDF.render('importeMora', String(0));
                     AutoReportPDF.render('total', String(cuponPago.importeCuota.toFixed(2)));
                 }
 
-                
+
                 AutoReportPDF.render('fecha_alta', dateFormat(cuponPago.fecha_alta, "dd-mm-yyyy"));
                 AutoReportPDF.render('fecha_baja', dateFormat(cuponPago.fecha_baja, "dd-mm-yyyy"));
                 AutoReportPDF.render('numeroCuota', cuponPago.numeroCuota);
                 AutoReportPDF.render('activo', cuponPago.activo);
                 AutoReportPDF.render('importeCuota', cuponPago.importeCuota.toFixed(2));
                 AutoReportPDF.render('fecha_vencimiento', dateFormat(cuponPago.fechaVencimiento, "dd-mm-yyyy"));
-                AutoReportPDF.render('pagado',  'https://www.aguasandinas.cl/aguascontema-theme/images/pagado.png');
+                AutoReportPDF.render('pagado', 'https://www.aguasandinas.cl/aguascontema-theme/images/pagado.png');
                 AutoReportPDF.create('C:/vestiteBien/comprobante_' + id + '.pdf').then(data => {
                     res.sendFile(data.filepath);
                 }).catch(err => console.log(err));
             });
 
+        }
+    });
+
+});
+
+
+router.get('/reporteNotaCredito/:id', (req, res) => {
+    var id;
+    fs.readFile(path.resolve(__dirname, 'templateNotaCredito.html'), 'utf-8', (err, templateNotaCredito) => {
+
+        if (req.params.id && templateNotaCredito) {
+            id = req.params.id;
+
+
+            var facturas = mongoose.model('facturas');
+            facturas.findById(ObjectId(id), function (err, doc) {
+                if (err) return console.error();
+                var factura = doc._doc;
+                var clientes = mongoose.model('clientes');
+
+                clientes.findById(ObjectId(factura.clienteID), function (err, resCliente) {
+                    if (err) return console.error();
+                    var cliente = resCliente._doc;
+                    AutoReportPDF.init(templateNotaCredito);
+
+                    const pathcss = path.resolve(__dirname, 'pdf-table.css');
+                    AutoReportPDF.config({
+                        charset: 'utf-8',
+                        css: [pathcss]
+                    });
+
+                    const imagenPagado = 'file:///' + path.resolve(__dirname, 'pagado.png');
+
+
+
+                    AutoReportPDF.render('factura', factura._id);
+                    AutoReportPDF.render('codigo', factura.codigo);
+                    var detalles = [];
+                    var total = 0;
+                    factura.detalles.map(d => {
+                        if (d.anulado) {
+                            detalles.push({ 'Producto': d.producto.Nombre, 'precioVenta': '$' + d.precioVenta, 'cantidad': d.cantidad, 'subtotal': '$' + d.cantidad * d.precioVenta });
+                            var subtotal = d.precioVenta * d.cantidad;
+                            total = total + subtotal + factura.recargo * subtotal - factura.descuento * subtotal;
+                        }
+
+                    });
+                    total = total.toFixed(2);
+                    var facturafecha = dateFormat(new Date(), "dd-mm-yyyy");
+                    AutoReportPDF.render('fecha_alta',facturafecha );
+                    AutoReportPDF.render('total', total);
+                    const columnas = [{ name: 'Nombre producto' }, { name: 'Precio' }, { name: 'Cantidad' }, { name: 'Subtotal' }];
+
+                    AutoReportPDF.renderTable(columnas, detalles, {
+                        tag: 'detalles', //The tag that should be replaced.,
+                        properties: ['Producto', 'precioVenta', 'cantidad', 'subtotal'] //Properties to access row object
+                    });
+                    AutoReportPDF.render('nombre', cliente.Nombre);
+                    AutoReportPDF.render('apellido', cliente.Apellido);
+                    AutoReportPDF.render('domicilio', cliente.Domicilio);
+                    AutoReportPDF.render('telefono', cliente.Telefono);
+                    AutoReportPDF.render('email', String(cliente.Email));
+                    AutoReportPDF.render('telefono', cliente.DNI);
+                    AutoReportPDF.render('total', factura.total);
+                    AutoReportPDF.create('C:/vestiteBien/nota_credito' + id + '.pdf').then(data => {
+                        res.sendFile(data.filepath);
+                    }).catch(err => console.log(err));
+                });
+
+            });
+                
         }
     });
 

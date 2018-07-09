@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+
+    <div class="header" align="center">
+
+
+        <h3 class="report-title">Nota de crédito</h3>
+        <br>
+        <h5>Fecha de generación: {{ @fecha_alta }}</h5>
+    </div>
+
+
+    <h3 class="report-title">Datos de facturación</h3>
+
+    <label for="">Sarmiento 589</label>
+    <br>
+    <label for="">Trelew</label>
+    <br>
+    <label for="">0280 455-8359</label>
+    <br>
+    <label for="">Factura N° {{@codigo}}</label>
+    <br>
+    <hr>
+    <h3 class="report-title">Datos del cliente</h3>
+    <label for="input-id" class="col-sm-2">Nombre: {{@nombre}}</label>
+    <br>
+    <label for="input-id" class="col-sm-2">Apellido: {{@apellido}}</label>
+    <br>
+    <label for="input-id" class="col-sm-2">Dirección: {{@domicilio}}</label>
+    <br>
+    <label for="input-id" class="col-sm-2">Contacto: {{@telefono}}</label>
+    <br>
+
+    <label for="input-id" class="col-sm-2">Email: {{@email}}</label>
+    <br>
+
+
+    <hr>
+    <h3 class="report-title">Detalle de anulación de productos</h3>
+
+
+    {{@detalles}}
+   
+    <h3 align="center">Total a reintegrar $ {{@total}}</h3>
+    <br>
+    <br>
+    <hr>
+    <div align="center">
+        <img class="logo" src="https://scontent.faep12-1.fna.fbcdn.net/v/t1.0-1/p200x200/17626298_1359830077416411_5935615244413680289_n.jpg?_nc_cat=0&oh=261d777001d7fc62ef0821036b6c2eb7&oe=5B7AB751">
+    </div>
+
+</body>
+
+</html>

@@ -1,25 +1,37 @@
 <br><br><br>
-<div class="panel panel-danger">
+<div class="panel panel-danger" *ngIf="clientes.length > 0 ">
     <div class="panel-heading">
       <h3 class="panel-title">Clientes morosos</h3>
     </div>
     <div class="panel-body">
       
       <ul class="list-group">
-        <li class="list-group-item">
-          <span class="badge">$5</span>
-          Cliente 3
+        <li class="list-group-item" *ngFor="let cliente of clientes">
+          <span class="badge">${{cliente.total_deuda}}</span>
+          {{cliente.cliente.Apellido}} - {{cliente.cliente.Nombre}} - DNI: {{cliente.cliente.DNI}} - Telefono: {{cliente.cliente.Telefono}}
         </li>
-        <li class="list-group-item">
-          <span class="badge">$10</span>
-          cliente 2
-        </li>
-        <li class="list-group-item">
-          <span class="badge">$15</span>
-          Cliente 1
-        </li>
+      
       </ul>
       
     </div>
+</div>
+
+
+<div class="panel panel-warning" *ngIf="clientesMorososFuturos.length > 0">
+  <div class="panel-heading">
+    <h3 class="panel-title">Clientes con cupones proximos a vencer</h3>
+    <h5>Corrimiento de {{corrimiento}} días</h5>
+  </div>
+  <div class="panel-body">
+    
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let cliente of clientesMorososFuturos">
+        <span class="badge">${{cliente.total_deuda}}</span>
+        {{cliente.cliente.Apellido}} - {{cliente.cliente.Nombre}} - DNI: {{cliente.cliente.DNI}} - Telefono: {{cliente.cliente.Telefono}}
+      </li>
+    
+    </ul>
+    
+  </div>
 </div>
 

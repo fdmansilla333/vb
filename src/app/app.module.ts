@@ -35,6 +35,9 @@ import { CuponesPagosComponent } from './cupones-pagos/cupones-pagos.component';
 
 // Import ngx-barcode module
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { ListadoEgresoClienteProductoComponent } from './listado-egreso-cliente-producto/listado-egreso-cliente-producto.component';
+import { DevolucionMercaderiaComponent } from './devolucion-mercaderia/devolucion-mercaderia.component';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +64,10 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     ListadoVentasComponent,
     AltaVentasComponent,
     DetalleVentaComponent,
-    CuponesPagosComponent
+    CuponesPagosComponent,
+    ListadoEgresoClienteProductoComponent,
+    DevolucionMercaderiaComponent,
+    NotificacionesComponent
   ],
   imports: [
     BrowserModule,

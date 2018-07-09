@@ -4,6 +4,9 @@ import { AppComponent } from './../app.component';
 import { Observable } from 'rxjs/Observable';
 import { Factura } from '../modelos/factura';
 import { CuponPago } from '../modelos/cuponpago';
+import { Cliente } from '../modelos/cliente';
+import { Renglon } from '../modelos/renglon';
+import { Operacion } from '../modelos/operacion';
 @Injectable()
 export class VentasService {
 
@@ -31,8 +34,8 @@ export class VentasService {
   obtenerSaldoCliente(clienteId: string): Observable<any> {
     return this.http.get(this.app.urlBase2 + 'saldos/' + clienteId);
   }
-  modificarSaldoCliente(clienteId: string, importeNuevo: number): Observable<any> {
-    let objeto = {importe: importeNuevo};
+  modificarSaldoCliente(clienteId: string, importeNuevo: number, operaciones: Operacion): Observable<any> {
+    let objeto = {importe: importeNuevo, operaciones: operaciones};
     return this.http.post(this.app.urlBase2 + 'saldos/' + clienteId, objeto);
   }
   abrirSaldo(clienteId: string): Observable <any> {
@@ -53,4 +56,14 @@ export class VentasService {
   obtenerFacturaPorId(id: string): Observable <Factura> {
     return this.http.get<Factura>(this.app.urlBase2 + 'facturas?id=' + id);
   }
+
+  obtenerClientePorId(idCliente: string): Observable <Cliente> {
+    return this.http.get<Cliente>(this.app.urlBase2 + 'clientes/' + idCliente);
+  }
+
+  modificarFactura(factura: Factura): Observable <Factura> {
+    return this.http.put<Factura>(this.app.urlBase2 + 'facturas/' + factura._id, factura);
+  }
+
+  
 }

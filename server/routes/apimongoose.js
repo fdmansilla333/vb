@@ -13,13 +13,15 @@ db.once('open', function () {
 });
 
 var facturaSchema = mongoose.Schema({
-    name: String
+    Activo: Boolean,
+    detalles: Array
 });
 
 
 var saldoSchema = mongoose.Schema({
     cliente: String,
-    monto: Number
+    monto: Number,
+    operaciones: Array
 
 });
 
@@ -74,7 +76,9 @@ router.get('/saldos/:cliente', (req, res) => {
 router.get('/abrirSaldo/:cliente', (req, res) => {
     if (req.params.cliente) {
         const cliente = req.params.cliente;
-        var s = new saldo({ 'cliente': cliente, 'monto': 0 });
+        var operaciones = [];
+        operaciones.push({ 'descripcion': 'Apertura de saldo', 'tipo_operacion': 1, 'fecha_generacion': new Date() });
+        var s = new saldo({ 'cliente': cliente, 'monto': 0, 'operaciones': operaciones });
 
         s.save(function (err, s) {
             if (err) return console.error(err);
@@ -88,15 +92,18 @@ router.post('/saldos/:cliente', (req, res) => {
         saldo.findOne({ 'cliente': req.params.cliente }, function (err, saldoCliente) {
             if (err) return console.error(err);
             if (saldoCliente && saldoCliente.monto) {
+                saldoCliente.operaciones.push(req.body.operaciones);
                 saldoCliente.monto += req.body.importe;
             } else {
                 //no posee cuenta hacemos un save
+                var operaciones = [];
+                operaciones.push({ 'descripcion': 'Apertura de cuenta', 'tipo_operacion': 1, 'fecha_generacion': new Date(), 'monto_operacion': 0 });
                 var s = new saldo();
                 s.cliente = req.params.cliente;
                 s.monto = req.body.importe;
+                operaciones.push({ 'descripcion': 'Nueva compra', 'tipo_operacion': 2, 'fecha_generacion': new Date(), 'monto_operacion':  req.body.importe});
+                s.operaciones = operaciones;
                 saldoCliente = s;
-
-
 
             }
             saldoCliente.save(function (err, s) {
@@ -109,10 +116,29 @@ router.post('/saldos/:cliente', (req, res) => {
     }
 });
 router.get('/facturas', (req, res) => {
-    if (req.params.id){
-        factura.find({'_id': ObjectId(req.params.id)}, function (err, factura) {
+    if (req.query.id) {
+        factura.findOne({ '_id': ObjectId(req.query.id) }, function (err, factura) {
             if (err) return console.error(err);
             res.json(factura);
+        });
+    }
+    factura.find({ 'Activo': true }, function (err, facturas) {
+        if (err) return console.errror(err);
+        res.json(facturas);
+    })
+});
+
+router.put('/facturas/:id', (req, res) => {
+    if (req.params.id) {
+        factura.findOne({ '_id': ObjectId(req.params.id) }, function (err, resfactura) {
+            if (err) return console.error(err);
+            var objetoFactura = req.body;
+            resfactura.detalles = objetoFactura.detalles;
+            resfactura.Activo = objetoFactura.activo;
+            resfactura.save(function (err, s) {
+                if (err) return console.error(err);
+                res.json(s);
+            });
         });
     }
 });
@@ -153,7 +179,7 @@ router.put('/cuponesPagos/:id', (req, res) => {
     if (req.params.id) {
         var id = req.params.id;
         var cupon = req.body;
-        cuponesPagos.findOne({'_id': ObjectId(id)}, function (err, resCupon) {
+        cuponesPagos.findOne({ '_id': ObjectId(id) }, function (err, resCupon) {
             if (err) { return console.error; }
             resCupon.pagada = true;
             resCupon.fecha_baja = new Date();
@@ -171,14 +197,28 @@ router.put('/cuponesPagos/:id', (req, res) => {
     }
 });
 
-router.get('/morosos', (req, res)=> {
+router.get('/morosos', (req, res) => {
     let ahora = new Date();
     ahora = ahora.toISOString();
-    cuponesPagos.find({fechaVencimiento: {$lte: ahora}}, function(err, docs){
-        if (err){return console.error;}
+    cuponesPagos.find({ pagada: false, activo: true }, function (err, docs) {
+        if (err) { return console.error; }
         res.json(docs);
     });
 });
+router.get('/clientes/:id', (req, res) => {
+    if (req.params.id) {
+        const idc = req.params.id;
+        cliente.findOne({ _id: idc }, function (err, docs) {
+            if (err) { return console.error; }
+            res.json(docs);
+        });
+    }
+});
+
+
+
+
+
 
 
 

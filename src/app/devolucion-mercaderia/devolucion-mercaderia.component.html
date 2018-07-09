@@ -1,0 +1,116 @@
+<br>
+<br>
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title">Devoluciones de mercadería</h3>
+  </div>
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="input-group">
+          <input (keyup)=buscar() autofocus type="text" class="form-control" id="exampleInputAmount" placeholder="Buscar" name="patron"
+            [(ngModel)]="patron">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" (click)="buscar()">Buscar!</button>
+
+          </span>
+        </div>
+
+        <div class="table-responsive" *ngIf="clientes && clientes.length > 0">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Apellido</th>
+                <th>Nombre</th>
+                <th>Domicilio</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Fecha alta</th>
+                <th>Activo?</th>
+                <th colspan="1" align="center">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of clientes">
+                <td>{{c.Apellido}}</td>
+                <td>{{c.Nombre}}</td>
+                <td>{{c.Domicilio}}</td>
+                <td>{{c.Email}}</td>
+                <td>{{c.Telefono}}</td>
+                <td>{{c.Fecha_alta | date: 'dd/MM/yyyy'}}</td>
+                <td *ngIf="c.Activo" style="color:green">Activo</td>
+                <td *ngIf="!c.Activo" style="color: red">Anulado</td>
+                <td>
+
+                  <button type="button" class="btn btn-primary" (click)="elegirCliente(c)">Seleccionar</button>
+
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row" *ngIf="activarBusquedaFacturas">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngIf="coleccionFacturas && coleccionFacturas.length > 0">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let f of coleccionFacturas">
+            Fecha
+            <label for="factura">{{f.fecha_alta | date: 'dd/MM/yyyy'}}</label>
+            Total
+            <label for="total">${{f.total}}</label>
+            Neto
+            <label for="neto">${{f.neto}}</label>
+
+            <button type="button" class="btn btn-large btn-block btn-primary" (click)="elegirFactura(f)">Seleccionar factura</button>
+
+
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngIf="activarBusquedaDetalles">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let d of colDetalles">
+            Nombre
+            <label for="nombre">{{d.producto?.Nombre}}</label>
+            Precio venta
+            <label for="precioVenta">${{d.precioVenta}}</label>
+            Cantidad
+            <label for="cantidad">${{d.cantidad}}</label>
+
+
+            <button *ngIf="!d.anulado" type="button" class="btn btn-large btn-block btn-primary" (click)="elegirProducto(d)">Seleccionar producto</button>
+            <button *ngIf="d.anulado" type="button" class="btn btn-large btn-block btn-primary" (click)="verNotaCredito(d)">Ver nota</button>
+
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="row" *ngIf="verComprobante">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Ver nota de credito</h3>
+          </div>
+          <div class="panel-body">
+            Imprima la nota de credito
+            <a href="{{rutaReporte}}reporteNotaCredito/{{facturaSeleccionada._id}}" target="blank">Descargar nota crédito</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+</div>

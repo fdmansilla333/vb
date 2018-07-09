@@ -9,4 +9,5 @@ export class Renglon {
     public producto: Producto;
     public cantidadMaxima = 1;
     generado = false;
+    public anulado = false; // este campo sirve para las devoluciones
 }

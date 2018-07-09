@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   titulo = 'app';
-  urlBase = 'http://192.168.1.36:3000/api/';
-  urlBase2 = 'http://192.168.1.36:3000/api2/';
-  urlReporte = 'http://192.168.1.36:3000/reporte/';
+  urlBase = 'http://192.168.1.35:3000/api/';
+  urlBase2 = 'http://192.168.1.35:3000/api2/';
+  urlReporte = 'http://192.168.1.35:3000/reporte/';
 }

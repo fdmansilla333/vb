@@ -14,6 +14,8 @@ import { CategoriaAltaComponent } from './categoria-alta/categoria-alta.componen
 import { CategoriaModificarComponent } from './categoria-modificar/categoria-modificar.component';
 import { AltaVentasComponent } from './ventas/alta-ventas/alta-ventas.component';
 import { CuponesPagosComponent } from './cupones-pagos/cupones-pagos.component';
+import { ListadoEgresoClienteProductoComponent } from './listado-egreso-cliente-producto/listado-egreso-cliente-producto.component';
+import { DevolucionMercaderiaComponent } from './devolucion-mercaderia/devolucion-mercaderia.component';
 
 
 
@@ -31,7 +33,9 @@ const routes: Routes = [
   { path: 'categorias/alta', component: CategoriaAltaComponent },
   { path: 'categorias/modificar/:id', component: CategoriaModificarComponent },
   { path: 'ventas/alta', component: AltaVentasComponent },
+  { path: 'ventas/listado', component: ListadoEgresoClienteProductoComponent },
   { path: 'cuponesPagos', component: CuponesPagosComponent },
+  { path: 'devolucion', component: DevolucionMercaderiaComponent},
 
 
 ];

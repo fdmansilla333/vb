@@ -16,6 +16,7 @@ export class Factura {
     public recargo: number;
     public descuento: number;
     public neto = 0;
+
     /**calculado */
     public cliente: Cliente;
     public cupones: CuponPago[];

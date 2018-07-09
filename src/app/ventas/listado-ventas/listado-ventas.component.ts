@@ -1,9 +1,10 @@
-import { Component, OnInit, Input , OnChanges} from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Factura } from '../../modelos/factura';
 import { VentasService } from '../ventas.service';
 import { Location } from '@angular/common';
 import { ClientesService } from '../../clientes.service';
 import { AppComponent } from '../../app.component';
+import { Operacion } from '../../modelos/operacion';
 
 
 @Component({
@@ -17,13 +18,13 @@ export class ListadoVentasComponent implements OnInit {
   @Input() colFacturas: Factura[];
   rutaReporte: string;
 
-  constructor( public app: AppComponent,
+  constructor(public app: AppComponent,
     private location: Location, protected servicio: VentasService, protected scliente: ClientesService) {
     this.rutaReporte = app.urlReporte;
-   }
+  }
 
   ngOnInit() {
-  this.agregarDetalles();
+    this.agregarDetalles();
 
   }
   agregarDetalles() {
@@ -32,8 +33,21 @@ export class ListadoVentasComponent implements OnInit {
       this.scliente.obtenerClientePorId(f.clienteID).subscribe(cliente => f.cliente = cliente);
     });
   }
-  anular(id: string) {
-    console.log(id);
+  anular(f: Factura) {
+    confirm('¿Desea anular la factura?') {
+      f.activo = false;
+      this.servicio.modificarFactura(f).subscribe(resFactura => {
+
+        let operacion = new Operacion();
+        operacion.descripcion = 'Anulación de la factura';
+        operacion.tipo_operacion = operacion.ANULACION;
+        operacion.fecha_generacion = new Date();
+        operacion.monto_operacion = -1 * (f.neto);
+        this.servicio.modificarSaldoCliente(f.clienteID, operacion.monto_operacion , operacion).subscribe(resSaldo => {
+          console.log(resSaldo);
+        });
+      });
+    }
   }
   ver(id: string) {
     console.log(id);
