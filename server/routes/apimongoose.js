@@ -123,7 +123,7 @@ router.get('/facturas', (req, res) => {
         });
     }
     factura.find({ 'Activo': true }, function (err, facturas) {
-        if (err) return console.errror(err);
+        if (err) return console.error(err);
         res.json(facturas);
     })
 });

@@ -9,6 +9,7 @@ export class Operacion {
     public PAGO = 3;
     public AJUSTE = 4;
     public ANULACION = 5;
+    public MORA = 6;
 }
 
 

@@ -14,10 +14,10 @@ export class VentasService {
 
 
   obtenerFacturasPorCliente(clienteid: string): Observable<Factura[]> {
-    return this.http.get<Factura[]>(this.app.urlBase2 + 'facturas?cliente=' + clienteid);
+    return this.http.get<Factura[]>(this.app.urlBase + 'facturas/' + clienteid);
   }
   obtenerFacturas(): Observable<Factura[]> {
-    return this.http.get<Factura[]>(this.app.urlBase2 + 'facturas');
+    return this.http.get<Factura[]>(this.app.urlBase + 'facturas');
   }
   guardarFactura(factura: Factura): Observable<Factura> {
     return this.http.post<Factura>(this.app.urlBase + 'facturas', factura);

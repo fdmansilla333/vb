@@ -513,10 +513,11 @@ router.get('/facturas/:cliente', (req, res) => {
     }
     const busquedaPorCliente = function (db, cliente, callback) {
         const collection = db.collection('facturas');
-        var objeto = new ObjectID(cliente);
-        var consulta = { "clienteID": objeto };
-        console.log(consulta);
-        collection.find(consulta, function (err, docs) {
+        //var objeto = new ObjectID(cliente);
+        var consulta = { "clienteID": cliente };
+       
+        collection.find(consulta).toArray(function (err, docs) {
+            if (err) return console.error(err);
 
             res.json(docs);
         });

@@ -6,6 +6,7 @@ import { Factura } from '../modelos/factura';
 import { CuponPago } from '../modelos/cuponpago';
 import { AppComponent } from '../app.component';
 import * as moment from 'moment';
+import { Operacion } from '../modelos/operacion';
 
 @Component({
   selector: 'app-cupones-pagos',
@@ -90,6 +91,25 @@ export class CuponesPagosComponent implements OnInit {
     c.activo = false;
     c.pagada = true;
     c.fecha_baja = new Date();
+
+    let operacion = new Operacion();
+    operacion.tipo_operacion = operacion.PAGO;
+    operacion.descripcion = 'Pago de cupon';
+    operacion.fecha_generacion = new Date();
+    operacion.monto_operacion = c.importeCuota;
+    this.vservice.modificarSaldoCliente(this.clienteSeleccionado, -1 * c.importeCuota, operacion)
+      .subscribe(resSaldo => console.log(resSaldo));
+
+    if (c.mora) {
+      let operacion2 = new Operacion();
+      operacion2.tipo_operacion = operacion.MORA;
+      operacion2.descripcion = 'Pago de Mora de $' + c.importeMora;
+      operacion2.fecha_generacion = new Date();
+      operacion2.monto_operacion = c.importeMora;
+      this.vservice.modificarSaldoCliente(this.clienteSeleccionado, 0, operacion2)
+        .subscribe(resSaldo => console.log(resSaldo));
+
+    }
     this.vservice.modificarCuponPago(c).subscribe(res => console.log(res));
   }
 
@@ -108,8 +128,8 @@ export class CuponesPagosComponent implements OnInit {
       c.mora = true;
       c.importeMora = (1 / 100) * c.importeCuota * diferencia;
       c.diasTranscurridos = diferencia;
-      const acepta = confirm('El pago posee mora,  es de: $' + c.importeMora.toFixed(2) + ' con  ' + diferencia + ' dias transcurridos'
-       + 'acepta pagar la mora?');
+      const acepta = confirm('El pago posee mora,  es de: $' + c.importeMora.toFixed(2) + ' con  ' + diferencia + ' dias transcurridos '
+        + 'acepta pagar la mora?');
       if (!acepta) {
         c.mora = false;
         c.importeMora = 0;

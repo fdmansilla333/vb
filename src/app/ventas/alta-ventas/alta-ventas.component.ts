@@ -11,6 +11,7 @@ import { CuponPago } from '../../modelos/cuponpago';
 import {
   Router
 } from '@angular/router';
+import { Operacion } from '../../modelos/operacion';
 
 @Component({
   selector: 'app-alta-ventas',
@@ -195,7 +196,13 @@ export class AltaVentasComponent implements OnInit {
 
   }
   modificarSaldo() {
-    this.servicio.modificarSaldoCliente(this.clienteSeleccionado, this.total).subscribe(res => console.log(res));
+    let operacion = new Operacion();
+    operacion.tipo_operacion = operacion.COMPRA;
+    operacion.descripcion = 'Venta de producto';
+    operacion.fecha_generacion = new Date();
+    operacion.monto_operacion = this.total;
+
+    this.servicio.modificarSaldoCliente(this.clienteSeleccionado, this.total, operacion).subscribe(res => console.log(res));
   }
 
 

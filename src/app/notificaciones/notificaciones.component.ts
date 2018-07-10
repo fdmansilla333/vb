@@ -14,7 +14,7 @@ export class NotificacionesComponent implements OnInit {
   constructor(protected sVentas: VentasService) { }
 
   ngOnInit() {
-    setInterval(() => this.comprobar(), 1000 * 60);
+    setInterval(() => this.comprobar(), 1000 * 10 );
 
   }
 
@@ -23,7 +23,7 @@ export class NotificacionesComponent implements OnInit {
     this.sVentas.obtenerCuponesImpagos().subscribe(colCuponesImpagos => {
       if (colCuponesImpagos.length > 0) {
         this.activarNotificacion = true;
-        this.mensaje = 'Existen ' + colCuponesImpagos.length + 'cupones impagos';
+        this.mensaje = 'Existen ' + colCuponesImpagos.length + 'cupones impagos. \n';
         let vencidos = 0;
         let proximosVencer = 0;
         let ahora = new Date();
@@ -39,8 +39,8 @@ export class NotificacionesComponent implements OnInit {
           }
 
         });
-        this.mensaje += ' Vencidos: ' + vencidos;
-        this.mensaje += ' Próximos a vencer: ' + proximosVencer;
+        this.mensaje += ' Vencidos: ' + vencidos + '. \n';
+        this.mensaje += ' Próximos a vencer: ' + proximosVencer + '. \n';
       } else {
         this.activarNotificacion = false;
         this.titulo = '';

@@ -6,6 +6,7 @@ import { Factura } from '../modelos/factura';
 import { Renglon } from '../modelos/renglon';
 import { AppComponent } from '../app.component';
 import { ProductosServicioService } from '../productos-servicio.service';
+import { Operacion } from '../modelos/operacion';
 
 @Component({
   selector: 'app-devolucion-mercaderia',
@@ -82,7 +83,13 @@ export class DevolucionMercaderiaComponent implements OnInit {
       d.anulado = true;
 
       this.servicioVentas.modificarFactura(this.facturaSeleccionada).subscribe(resFacturaModificada => console.log(resFacturaModificada));
-      this.servicioVentas.modificarSaldoCliente(this.clienteSeleccionado._id, -1 * (d.precioVenta * d.cantidad)).subscribe(resSaldo => {
+      let subtotal = -1 * (d.precioVenta * d.cantidad);
+      let operacion: Operacion = new Operacion();
+      operacion.fecha_generacion = new Date();
+      operacion.monto_operacion = subtotal;
+      operacion.descripcion = 'Devolución de producto';
+      operacion.tipo_operacion = operacion.ANULACION;
+      this.servicioVentas.modificarSaldoCliente(this.clienteSeleccionado._id, subtotal, operacion).subscribe(resSaldo => {
         console.log(resSaldo);
         this.saldo = resSaldo;
         this.servicioProducto.obteneProductoPorId(d.producto._id).subscribe(resProducto => {

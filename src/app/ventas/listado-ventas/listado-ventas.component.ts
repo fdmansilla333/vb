@@ -34,7 +34,7 @@ export class ListadoVentasComponent implements OnInit {
     });
   }
   anular(f: Factura) {
-    confirm('¿Desea anular la factura?') {
+    if (confirm('¿Desea anular la factura?')) {
       f.activo = false;
       this.servicio.modificarFactura(f).subscribe(resFactura => {
 
