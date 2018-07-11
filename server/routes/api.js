@@ -502,20 +502,31 @@ router.patch('/productos/:id', (req, res) => {
 });
 
 // Definir factura
-
-
-router.get('/facturas/:cliente', (req, res) => {
+router.get('/facturas', (req, res) => {
     const buscarFacturas = function (db, callback) {
         const collection = db.collection('facturas');
         collection.find().toArray(function (err, docs) {
             res.json(docs);
         });
     }
+
+    MongoClient.connect(url, function (err, client) {
+
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        buscarFacturas(db, function () {
+            client.close();
+        });
+
+    });
+});
+
+router.get('/facturas/:cliente', (req, res) => {
     const busquedaPorCliente = function (db, cliente, callback) {
         const collection = db.collection('facturas');
         //var objeto = new ObjectID(cliente);
         var consulta = { "clienteID": cliente };
-       
+
         collection.find(consulta).toArray(function (err, docs) {
             if (err) return console.error(err);
 
@@ -545,19 +556,19 @@ router.post('/facturas', (req, res) => {
     const insertDocuments = function (db, callback) {
         const collection = db.collection('facturas');
         //Usada para las secuencias
-        
-       collection.count(function (err, count){
+
+        collection.count(function (err, count) {
             count = count + 1;
             req.body.codigo = count;
             collection.insertOne(req.body, function (err, result) {
                 if (err) throw err;
-    
+
                 res.json(req.body);
             });
         });
-        
 
-      
+
+
     }
 
     MongoClient.connect(url, function (err, client) {
