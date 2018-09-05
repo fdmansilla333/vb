@@ -117,7 +117,8 @@ router.get('/reporteFactura/:id', (req, res) => {
                         properties: ['Producto', 'precioVenta', 'cantidad', 'subtotal'] //Properties to access row object
                     });
 
-                    AutoReportPDF.create('C:/vestiteBien/factura' + id + '.pdf').then(data => {
+                   AutoReportPDF.create('C:/vestiteBien/facturas/' + id + '.pdf').then(data => {
+                   
                         res.sendFile(data.filepath);
                     }).catch(err => console.log(err));
                 })
@@ -173,7 +174,7 @@ router.get('/reporteComprobante/:id', (req, res) => {
                 AutoReportPDF.render('importeCuota', cuponPago.importeCuota.toFixed(2));
                 AutoReportPDF.render('fecha_vencimiento', dateFormat(cuponPago.fechaVencimiento, "dd-mm-yyyy"));
                 AutoReportPDF.render('pagado', 'https://www.aguasandinas.cl/aguascontema-theme/images/pagado.png');
-                AutoReportPDF.create('C:/vestiteBien/comprobante_' + id + '.pdf').then(data => {
+                AutoReportPDF.create('C:/vestiteBien/comprobante/comprobante_' + id + '.pdf').then(data => {
                     res.sendFile(data.filepath);
                 }).catch(err => console.log(err));
             });
@@ -242,7 +243,7 @@ router.get('/reporteNotaCredito/:id', (req, res) => {
                     AutoReportPDF.render('email', String(cliente.Email));
                     AutoReportPDF.render('telefono', cliente.DNI);
                     AutoReportPDF.render('total', factura.total);
-                    AutoReportPDF.create('C:/vestiteBien/nota_credito' + id + '.pdf').then(data => {
+                    AutoReportPDF.create('C:/vestiteBien/notas_credito/nota_credito' + id + '.pdf').then(data => {
                         res.sendFile(data.filepath);
                     }).catch(err => console.log(err));
                 });
