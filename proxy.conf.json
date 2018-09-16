@@ -1,16 +1,16 @@
 {
   "/api": {
-    "target": "http://192.168.1.35:3000",
+    "target": "http://localhost:3000",
     "secure": false,
     "logLevel": "debug"
   },
   "/api2": {
-    "target": "http://192.168.1.35:3000",
+    "target": "http://localhost:3000",
     "secure": false,
     "logLevel": "debug"
   },
   "/reporte": {
-    "target": "http://192.168.1.35:3000",
+    "target": "http://localhost:3000",
     "secure": false,
     "logLevel": "debug"
   }

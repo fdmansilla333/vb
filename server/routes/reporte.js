@@ -222,7 +222,7 @@ router.get('/reporteNotaCredito/:id', (req, res) => {
                         if (d.anulado) {
                             detalles.push({ 'Producto': d.producto.Nombre, 'precioVenta': '$' + d.precioVenta, 'cantidad': d.cantidad, 'subtotal': '$' + d.cantidad * d.precioVenta });
                             var subtotal = d.precioVenta * d.cantidad;
-                            total = total + subtotal + factura.recargo * subtotal - factura.descuento * subtotal;
+                            total = total + subtotal + (factura.recargo/100) * subtotal - (factura.descuento/100) * subtotal;
                         }
 
                     });

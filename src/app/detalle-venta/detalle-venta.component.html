@@ -29,15 +29,21 @@
         <input type="number" min="0" class="form-control" name="precioV" placeholder="Ingrese el precio de venta" required [(ngModel)]="d.precioVenta">
       </div>
 
-      <button type="button" (click)="quitarRenglon(x)" class="btn btn-danger">Quitar</button>
-      <button type="button" (click)="agregarRenglon()" [disabled]="ventaForm.invalid || d.generado" class="btn btn-success">Agregar</button>
+      <div align="center">
+        <button type="button" (click)="quitarRenglon(x)" class="btn btn-danger">Quitar</button>
+        <button type="button" (click)="agregarRenglon()" [disabled]="ventaForm.invalid || d.generado" class="btn btn-success">Agregar</button>
+  
 
+      </div>
+      
     </form>
 
   </div>
 </div>
 
 
+<div align="center">
+  <button type="button" class="btn btn-primary" (click)="confirmar()" [disabled]="detalles.length === 0 && total === 0">Confirmar $ {{total}}</button>
+</div>
 
 
-<button type="button" class="btn btn-primary" (click)="confirmar()" [disabled]="detalles.length === 0">Confirmar $ {{total}}</button>

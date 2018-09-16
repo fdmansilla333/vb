@@ -69,6 +69,9 @@ export class DetalleVentaComponent implements OnInit {
         if (d.cantidad <= 0) {
           verifica = false;
         }
+        if (this.total === 0) {
+          verifica = false;
+        }
       });
     }
     return verifica;
