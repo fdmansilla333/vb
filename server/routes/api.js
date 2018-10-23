@@ -41,8 +41,8 @@ let response = {
 router.get('/clientes', (req, res) => {
     const buscarDocumento = function (db, nombre, callback) {
         const collection = db.collection('clientes');
-        var consulta = { "Nombre": { $regex: ".*" + nombre + ".*" } };
-        console.log(consulta);
+        var consulta = { $or : [ {"Nombre": { $regex: ".*" + nombre + ".*" } },  {"Apellido": { $regex: ".*" + nombre + ".*" } }] };
+        
         collection.find(consulta).toArray(function (err, docs) {
             res.json(docs);
         });

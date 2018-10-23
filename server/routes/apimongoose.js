@@ -101,7 +101,7 @@ router.post('/saldos/:cliente', (req, res) => {
                 var s = new saldo();
                 s.cliente = req.params.cliente;
                 s.monto = req.body.importe;
-                operaciones.push({ 'descripcion': 'Nueva compra', 'tipo_operacion': 2, 'fecha_generacion': new Date(), 'monto_operacion':  req.body.importe});
+                operaciones.push({ 'descripcion': 'Nueva compra', 'tipo_operacion': 2, 'fecha_generacion': new Date(), 'monto_operacion': req.body.importe });
                 s.operaciones = operaciones;
                 saldoCliente = s;
 
@@ -121,11 +121,14 @@ router.get('/facturas', (req, res) => {
             if (err) return console.error(err);
             res.json(factura);
         });
+    } else {
+
+
+        factura.find({ 'activo': true }, function (err, facturas) {
+            if (err) return console.error(err);
+            res.json(facturas);
+        });
     }
-    factura.find({ 'Activo': true }, function (err, facturas) {
-        if (err) return console.error(err);
-        res.json(facturas);
-    })
 });
 
 router.put('/facturas/:id', (req, res) => {
@@ -205,15 +208,19 @@ router.get('/morosos', (req, res) => {
         res.json(docs);
     });
 });
+
 router.get('/clientes/:id', (req, res) => {
     if (req.params.id) {
         const idc = req.params.id;
-        cliente.findOne({ _id: idc }, function (err, docs) {
-            if (err) { return console.error; }
-            res.json(docs);
+        cliente.findOne({ '_id': ObjectId(idc) }, function (err, docs) {
+        if (err) {return console.error;}
+        res.json(docs);
+
         });
     }
+    
 });
+
 
 
 
