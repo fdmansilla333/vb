@@ -41,7 +41,8 @@ let response = {
 router.get('/clientes', (req, res) => {
     const buscarDocumento = function (db, nombre, callback) {
         const collection = db.collection('clientes');
-        var consulta = { $or : [ {"Nombre": { $regex: ".*" + nombre + ".*" } },  {"Apellido": { $regex: ".*" + nombre + ".*" } }] };
+        const comodin = { $regex: ".*" + nombre + ".*", $options: 'i' }
+        var consulta = { $or : [ {"Nombre": comodin },  {"Apellido": comodin }] };
         
         collection.find(consulta).toArray(function (err, docs) {
             res.json(docs);
@@ -216,7 +217,8 @@ router.get('/categorias', (req, res) => {
 
     const buscarCategoriasNombre = function (db, nombre, callback) {
         const collection = db.collection('categorias');
-        var consulta = { "nombre": { $regex: ".*" + nombre + ".*" } };
+        const comodin = { $regex: ".*" + nombre + ".*", $options: 'i' }
+        var consulta = { "nombre": comodin };
         console.log(consulta);
         collection.find(consulta).toArray(function (err, docs) {
             res.json(docs);
@@ -375,7 +377,8 @@ router.get('/productos', (req, res) => {
 router.get('/productos/:id', (req, res) => {
     const busquedaProductos = function (db, nombre, callback) {
         const collection = db.collection('productos');
-        var consulta = { "nombre": { $regex: ".*" + nombre + ".*" } };
+        const comodin = { $regex: ".*" + nombre + ".*", $options: 'i' }
+        var consulta = { "nombre": comodin };
         console.log(consulta);
         collection.find(consulta).toArray(function (err, docs) {
             res.json(docs);

@@ -20,7 +20,7 @@ export class ProductosBusquedaComponent implements OnInit {
 
 
   buscar() {
-    if (this.patron.length > 3) {
+    if (this.patron.length >= 3) {
       this.servicio.obtenerProductosPorNombre(this.patron).subscribe(colProductos => this.productos = colProductos);
     } else {
       this.productos = [];

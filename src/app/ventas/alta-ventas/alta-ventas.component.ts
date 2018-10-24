@@ -34,7 +34,7 @@ export class AltaVentasComponent implements OnInit {
   public cantidad: number;
   public total: number = 0;
   importeCuota: number = 0;
-  diasMora = 10;
+  diasMora = 28;
   entrega = 0;
   cantCuotas = 1;
 
@@ -171,9 +171,10 @@ export class AltaVentasComponent implements OnInit {
           c.activo = true;
           c.importeCuota = resultadoFactura.neto / this.cantCuotas;
           c.fechaVencimiento = hoy;
-          c.fechaVencimiento.setMonth(c.fechaVencimiento.getMonth() + 1); // Se corre un mes
-          hoy = c.fechaVencimiento;
-          c.fechaVencimiento.setDate(c.fechaVencimiento.getDate() + factura.cantidadDiasMoroso); // se corren diez dias
+          c.fechaVencimiento.setDate(c.fechaVencimiento.getDate() + this.diasMora);
+          // c.fechaVencimiento.setMonth(c.fechaVencimiento.getMonth() + 1); // Se corre un mes
+          // hoy = c.fechaVencimiento;
+          // c.fechaVencimiento.setDate(c.fechaVencimiento.getDate() + factura.cantidadDiasMoroso); // se corren diez dias
 
           this.servicio.guardarCuponPago(c).subscribe(res => console.log(res));
         }

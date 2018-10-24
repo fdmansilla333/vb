@@ -21,7 +21,7 @@ export class CategoriaBusquedaComponent implements OnInit {
   }
 
   buscar() {
-    if (this.patron.length > 3) {
+    if (this.patron.length >= 3) {
       this.servicio.obtenerCategoriaPorNombre(this.patron).subscribe(colCategorias => this.categorias = colCategorias);
     } else {
       this.categorias = [];

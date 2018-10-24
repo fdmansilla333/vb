@@ -40,7 +40,10 @@ export class NotificacionesComponent implements OnInit {
 
         });
         this.mensaje += ' Vencidos: ' + vencidos + '. \n';
+
         this.mensaje += ' Próximos a vencer: ' + proximosVencer + '. \n';
+        
+        this.mensaje += ' Vaya a clientes --> morosos';
       } else {
         this.activarNotificacion = false;
         this.titulo = '';

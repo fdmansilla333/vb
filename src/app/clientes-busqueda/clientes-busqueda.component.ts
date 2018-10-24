@@ -20,7 +20,7 @@ export class ClientesBusquedaComponent implements OnInit {
   }
 
   buscar() {
-    if (this.patron.length > 3) {
+    if (this.patron.length >= 3) {
 
       if (Number(this.patron)) {
         this.servicio.obtenerClientesPorTelefonoYDNI(this.patron).subscribe(colClientes => this.clientes = colClientes);
