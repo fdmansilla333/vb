@@ -21,7 +21,7 @@ export class BusquedaVentasComponent implements OnInit {
 
 
   buscar() {
-    if (this.patron.length > 3) {
+    if (this.patron.length >= 3) {
       this.servicio.obtenerFacturasPorClienteNombre(this.patron).subscribe(colFacturas => this.facturas = colFacturas);
     } else {
       this.facturas = [];

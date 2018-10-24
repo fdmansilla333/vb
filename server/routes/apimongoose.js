@@ -150,8 +150,8 @@ router.get('/facturas/:termino', (req, res) => {
     if (req.params.termino) {
         // primero se busca por cliente
         const termino = req.params.termino;
-        const comodin = { $regex: ".*" + termino + ".*" }
-        cliente.findOne({ Nombre: comodin }, function (err, doc) {
+        const comodin = { $regex: ".*" + termino + ".*", $options: 'i' }
+        cliente.findOne({$or:[ {Nombre: comodin}, {Apellido: comodin} ]}, function (err, doc) {
             if (err) { return console.error(err); }
             if (doc) {
                 factura.find({ clienteID: doc.id }, function (err, colfacturas) {
