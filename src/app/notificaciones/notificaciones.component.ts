@@ -23,18 +23,18 @@ export class NotificacionesComponent implements OnInit {
     this.sVentas.obtenerCuponesImpagos().subscribe(colCuponesImpagos => {
       if (colCuponesImpagos.length > 0) {
         this.activarNotificacion = true;
-        this.mensaje = 'Existen ' + colCuponesImpagos.length + 'cupones impagos. \n';
+        this.mensaje = 'Existen ' + colCuponesImpagos.length + ' cupones impagos. \n';
         let vencidos = 0;
         let proximosVencer = 0;
         let ahora = new Date();
         colCuponesImpagos.map(c => {
           const fechaVencimiento = new Date(c.fechaVencimiento);
           const corrimiento = new Date(fechaVencimiento);
-          corrimiento.setDate(corrimiento.getDate() + 5);
+          corrimiento.setDate(corrimiento.getDate() - 2);
           if (fechaVencimiento <= ahora) {
             vencidos += 1;
           }
-          if (fechaVencimiento > ahora && corrimiento < fechaVencimiento) {
+          if (fechaVencimiento > ahora && corrimiento <= ahora) {
             proximosVencer += 1;
           }
 
@@ -43,7 +43,7 @@ export class NotificacionesComponent implements OnInit {
 
         this.mensaje += ' Próximos a vencer: ' + proximosVencer + '. \n';
         
-        this.mensaje += ' Vaya a clientes --> morosos';
+        
       } else {
         this.activarNotificacion = false;
         this.titulo = '';

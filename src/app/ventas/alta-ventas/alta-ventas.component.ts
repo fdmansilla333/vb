@@ -34,7 +34,7 @@ export class AltaVentasComponent implements OnInit {
   public cantidad: number;
   public total: number = 0;
   importeCuota: number = 0;
-  diasMora = 28;
+  diasMora = 30;
   entrega = 0;
   cantCuotas = 1;
 
