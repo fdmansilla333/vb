@@ -41,7 +41,8 @@ var cuponPagoSchema = mongoose.Schema({
     importeMora: Number,
     diasTranscurridos: Number,
     total: Number,
-    activa: Boolean
+    activa: Boolean,
+    fechaSugeridaVencimiento: Date,
 });
 
 
@@ -184,12 +185,18 @@ router.put('/cuponesPagos/:id', (req, res) => {
         var cupon = req.body;
         cuponesPagos.findOne({ '_id': ObjectId(id) }, function (err, resCupon) {
             if (err) { return console.error; }
-            resCupon.pagada = true;
-            resCupon.fecha_baja = new Date();
+            resCupon.pagada = cupon.pagada;
+            if (cupon.pagada){
+                resCupon.fecha_baja = new Date();
+            }else{
+                resCupon.fecha_baja = null;
+            }
+            
             resCupon.mora = cupon.mora;
             resCupon.importeMora = cupon.importeMora;
             resCupon.diasTranscurridos = cupon.diasTranscurridos;
             resCupon.total = cupon.importeMora + cupon.importeCuota;
+            resCupon.fechaSugeridaVencimiento = cupon.fechaSugeridaVencimiento;
             resCupon.save(function (err, s) {
                 if (err) return console.error(err);
                 res.json(s);

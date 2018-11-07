@@ -11,6 +11,7 @@ export class CuponPago {
     mora: boolean = false;
     importeMora = 0;
     diasTranscurridos = 0;
+  fechaSugeridaVencimiento: Date;
 
 
 }
