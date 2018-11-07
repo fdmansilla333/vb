@@ -14,7 +14,7 @@ export class NotificacionesComponent implements OnInit {
   constructor(protected sVentas: VentasService) { }
 
   ngOnInit() {
-    setInterval(() => this.comprobar(), 1000 * 10 );
+    setInterval(() => this.comprobar(), 1000 * 10);
 
   }
 
@@ -28,7 +28,13 @@ export class NotificacionesComponent implements OnInit {
         let proximosVencer = 0;
         let ahora = new Date();
         colCuponesImpagos.map(c => {
-          const fechaVencimiento = new Date(c.fechaVencimiento);
+          let fechaVencimiento: Date;
+          if (c.fechaSugeridaVencimiento) {
+            fechaVencimiento = new Date(c.fechaSugeridaVencimiento);
+          } else {
+            fechaVencimiento = new Date(c.fechaVencimiento);
+          }
+
           const corrimiento = new Date(fechaVencimiento);
           corrimiento.setDate(corrimiento.getDate() - 2);
           if (fechaVencimiento <= ahora) {
@@ -42,8 +48,8 @@ export class NotificacionesComponent implements OnInit {
         this.mensaje += ' Vencidos: ' + vencidos + '. \n';
 
         this.mensaje += ' Próximos a vencer: ' + proximosVencer + '. \n';
-        
-        
+
+
       } else {
         this.activarNotificacion = false;
         this.titulo = '';

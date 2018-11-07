@@ -28,13 +28,41 @@ export class ClientesMorososComponent implements OnInit {
     this.servicio.obtenerCuponesImpagos().subscribe(
       colCuponesImpagos => {
 
+        let cuponesVer = colCuponesImpagos.map(c => {
+          const fechaVencimiento = new Date(c.fechaVencimiento);
+          const fechaAlta = new Date(c.fecha_alta);
+          const diferencia: number = (fechaVencimiento - fechaAlta) / (1000 * 60 * 60 * 24);
+          let dif = diferencia / c.numeroCuota;
+          if (dif > 30) {
+
+            let fechaSu = new Date(fechaAlta);
+            fechaSu.setDate(fechaSu.getDate() + 30);
+            c.fechaSugeridaVencimiento = fechaSu;
+            this.servicio.modificarCuponPago(c).subscribe(res => console.log(res));
+          }
+        });
+        cuponesVer = cuponesVer.filter(c => c);
+        console.log(cuponesVer);
+
         const colCuponesVencidos = colCuponesImpagos.filter(cuponImpago => {
-          const fechaVencimiento = new Date(cuponImpago.fechaVencimiento);
+          let fechaVencimiento: Date;
+          if (cuponImpago.fechaSugeridaVencimiento) {
+            fechaVencimiento = new Date(cuponImpago.fechaSugeridaVencimiento);
+          } else {
+            fechaVencimiento = new Date(cuponImpago.fechaVencimiento);
+          }
+
           return fechaVencimiento <= ahora;
         });
 
         const colCuponesProntoVencerse = colCuponesImpagos.filter(cuponPago => {
-          const fechaVencimiento = new Date(cuponPago.fechaVencimiento);
+          let fechaVencimiento: Date;
+          if (cuponPago.fechaSugeridaVencimiento) {
+            fechaVencimiento = new Date(cuponPago.fechaSugeridaVencimiento);
+          } else {
+            fechaVencimiento = new Date(cuponPago.fechaVencimiento);
+          }
+
           // Obtener los cupones prontos a vencerse a 3 dias
           return fechaVencimiento > ahora && fechaVencimiento <= diaCorrimiento;
         });
@@ -76,6 +104,7 @@ export class ClientesMorososComponent implements OnInit {
             }
           }
         });
+
 
         this.clientes = this.clientes.sort((a, b) => {
           if (a.total_deuda > b.total_deuda) {
