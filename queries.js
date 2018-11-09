@@ -1,0 +1,1 @@
+db.getCollection('cuponespagos').update({}, {$unset:{"fechaSugeridaVencimiento":1}}, {multi:true})

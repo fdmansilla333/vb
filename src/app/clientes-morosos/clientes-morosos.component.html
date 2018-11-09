@@ -35,3 +35,25 @@
   </div>
 </div>
 
+
+<div class="panel panel-danger">
+    <div class="panel-heading">
+      <h3 class="panel-title">Correccion de días de vencimiento</h3>
+    </div>
+    <div class="panel-body">
+      
+      <div class="form-group">
+        <label for="inputcorrimiento" class="col-sm-2 control-label">Corrimiento:</label>
+        <div class="col-sm-2">
+          <input type="number" #corrimientoDias name="corrimiento" id="inputcorrimiento" class="form-control" value="30" min="1" step="1" required="required" title="Corrimiento">
+        </div>
+      </div>
+
+      
+      <button type="button" class="btn btn-danger" (click)="corregirDias(corrimientoDias.value)">Actualizar</button>
+      
+      
+    </div>
+</div>
+
+

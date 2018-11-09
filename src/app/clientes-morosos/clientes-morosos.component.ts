@@ -28,21 +28,8 @@ export class ClientesMorososComponent implements OnInit {
     this.servicio.obtenerCuponesImpagos().subscribe(
       colCuponesImpagos => {
 
-        let cuponesVer = colCuponesImpagos.map(c => {
-          const fechaVencimiento = new Date(c.fechaVencimiento);
-          const fechaAlta = new Date(c.fecha_alta);
-          const diferencia: number = (fechaVencimiento - fechaAlta) / (1000 * 60 * 60 * 24);
-          let dif = diferencia / c.numeroCuota;
-          if (dif > 30) {
 
-            let fechaSu = new Date(fechaAlta);
-            fechaSu.setDate(fechaSu.getDate() + 30);
-            c.fechaSugeridaVencimiento = fechaSu;
-            this.servicio.modificarCuponPago(c).subscribe(res => console.log(res));
-          }
-        });
-        cuponesVer = cuponesVer.filter(c => c);
-        console.log(cuponesVer);
+
 
         const colCuponesVencidos = colCuponesImpagos.filter(cuponImpago => {
           let fechaVencimiento: Date;
@@ -127,6 +114,33 @@ export class ClientesMorososComponent implements OnInit {
     this.servicio.obtenerFacturaPorId(c.factura).subscribe(resFactura => {
       return resFactura.cliente;
     });
+  }
+
+  corregirDias(dias: number) {
+    if (confirm('¿Desea modificar los cupones impagos a ' + dias + ' de vencimiento?')) {
+
+      this.servicio.obtenerCuponesImpagos().subscribe(
+        colCuponesImpagos => {
+
+          let cuponesVer = colCuponesImpagos.map(c => {
+            const fechaVencimiento = new Date(c.fechaVencimiento);
+            const fechaAlta = new Date(c.fecha_alta);
+            const diferencia: number = (fechaVencimiento.getTime() - fechaAlta.getTime()) / (1000 * 60 * 60 * 24);
+            let dif = diferencia / c.numeroCuota;
+            if (dif > dias) {
+
+              let fechaSu = new Date(fechaAlta.getTime() + (1000 * 3600 * 24 * dias * c.numeroCuota));
+
+              c.fechaSugeridaVencimiento = fechaSu;
+              this.servicio.modificarCuponPago(c).subscribe(res => console.log(res));
+            }
+          });
+          cuponesVer = cuponesVer.filter(c => c);
+
+          console.log(cuponesVer);
+        });
+    }
+
   }
 
 

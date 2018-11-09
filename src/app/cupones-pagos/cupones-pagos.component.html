@@ -42,7 +42,8 @@
         <ul class="list-group" *ngFor="let c of f?.cupones">
           <li class="list-group-item">
             <span>
-              N°: {{c.numeroCuota}} - importe: ${{c.importeCuota.toFixed(2)}} fecha vencimiento: {{c.fechaVencimiento | date: 'dd/MM/yyyy'}}
+              N°: {{c.numeroCuota}} - importe: ${{c.importeCuota.toFixed(2)}} fecha vencimiento: {{c.fechaVencimiento | date: 'dd/MM/yyyy'}} 
+              <span *ngIf="c.fechaSugeridaVencimiento"> Fecha sugerida modificada: {{c.fechaSugeridaVencimiento | date: 'dd/MM/yyyy'}}</span>
               <button type="button" class="btn btn-default" *ngIf="!c.pagada" (click)="pagar(c)">Pagar</button>
               <a target="_blank" href="{{rutaReporte}}reporteComprobante/{{c._id}}"  *ngIf="c.pagada" >
                 <button type="button" class="btn btn-default" >ver comprobante</button>
