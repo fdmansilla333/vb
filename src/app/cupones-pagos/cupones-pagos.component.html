@@ -48,7 +48,13 @@
               <a target="_blank" href="{{rutaReporte}}reporteComprobante/{{c._id}}"  *ngIf="c.pagada" >
                 <button type="button" class="btn btn-default" >ver comprobante</button>
               </a>
-
+              <a routerLink="pagoParcial/{{c._id}}">
+              
+              <button type="button" class="btn btn-success">Pago parcial</button>
+              
+              </a>
+   
+              
             </span>
         
           </li>
@@ -61,3 +67,8 @@
     </div>
   </div>
 </div>
+
+
+
+
+

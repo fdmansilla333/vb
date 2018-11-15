@@ -38,6 +38,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
 import { ListadoEgresoClienteProductoComponent } from './listado-egreso-cliente-producto/listado-egreso-cliente-producto.component';
 import { DevolucionMercaderiaComponent } from './devolucion-mercaderia/devolucion-mercaderia.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { PagoParcialComponent } from './pago-parcial/pago-parcial.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
     CuponesPagosComponent,
     ListadoEgresoClienteProductoComponent,
     DevolucionMercaderiaComponent,
-    NotificacionesComponent
+    NotificacionesComponent,
+    PagoParcialComponent
   ],
   imports: [
     BrowserModule,

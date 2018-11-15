@@ -16,6 +16,7 @@ import { AltaVentasComponent } from './ventas/alta-ventas/alta-ventas.component'
 import { CuponesPagosComponent } from './cupones-pagos/cupones-pagos.component';
 import { ListadoEgresoClienteProductoComponent } from './listado-egreso-cliente-producto/listado-egreso-cliente-producto.component';
 import { DevolucionMercaderiaComponent } from './devolucion-mercaderia/devolucion-mercaderia.component';
+import { PagoParcialComponent } from './pago-parcial/pago-parcial.component';
 
 
 
@@ -36,6 +37,8 @@ const routes: Routes = [
   { path: 'ventas/listado', component: ListadoEgresoClienteProductoComponent },
   { path: 'cuponesPagos', component: CuponesPagosComponent },
   { path: 'devolucion', component: DevolucionMercaderiaComponent},
+  { path: 'cuponesPagos/pagoParcial/:id', component: PagoParcialComponent},
+
 
 
 ];
