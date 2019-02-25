@@ -86,22 +86,23 @@ router.get('/reporteFactura/:id', (req, res) => {
                         css: [pathcss]
                     });
 
-
+                    const mensaje= 'Sin datos';
+                    
                     AutoReportPDF.render('cantidadCuotas', factura.cantidadCuotas);
                     AutoReportPDF.render('importeCuota', factura.importeCuota);
-                    AutoReportPDF.render('nombre', cliente.Nombre);
-                    AutoReportPDF.render('apellido', cliente.Apellido);
-                    AutoReportPDF.render('domicilio', cliente.Domicilio);
-                    AutoReportPDF.render('telefono', cliente.Telefono);
-                    AutoReportPDF.render('email', String(cliente.Email));
-                    AutoReportPDF.render('telefono', cliente.DNI);
-                    AutoReportPDF.render('total', factura.total);
-                    AutoReportPDF.render('codigo', factura.codigo);
+                    AutoReportPDF.render('nombre', cliente.Nombre ? cliente.Nombre : mensaje);
+                    AutoReportPDF.render('apellido', cliente.Apellido  ? cliente.Apellido : mensaje);
+                    AutoReportPDF.render('domicilio', cliente.Domicilio  ? cliente.Domicilio : mensaje);
+                    AutoReportPDF.render('telefono', cliente.Telefono  ? cliente.Telefono : mensaje);
+                    AutoReportPDF.render('email', String(cliente.Email  ? cliente.Email : mensaje ));
+                    AutoReportPDF.render('telefono', cliente.DNI ? cliente.DNI : mensaje );
+                    AutoReportPDF.render('total', factura.total ?factura.total : mensaje );
+                    AutoReportPDF.render('codigo', factura.codigo ? factura.codigo : mensaje );
 
-                    AutoReportPDF.render('recargo', String(factura.recargo));
-                    AutoReportPDF.render('descuento', String(factura.descuento));
-                    AutoReportPDF.render('entrega', String(factura.entrega));
-                    AutoReportPDF.render('neto', factura.neto);
+                    AutoReportPDF.render('recargo', String(factura.recargo ? factura.recargo : mensaje ));
+                    AutoReportPDF.render('descuento', String(factura.descuento ? factura.descuento : mensaje ));
+                    AutoReportPDF.render('entrega', String(factura.entrega ? factura.entrega : mensaje));
+                    AutoReportPDF.render('neto', factura.neto  ? factura.neto : mensaje);
                     var facturafecha = dateFormat(factura.fecha_alta, "dd-mm-yyyy");
 
                     AutoReportPDF.render('fecha_alta', facturafecha);
@@ -121,7 +122,9 @@ router.get('/reporteFactura/:id', (req, res) => {
                    
                         res.sendFile(data.filepath);
                     }).catch(err => console.log(err));
+                
                 })
+            
 
             });
         }

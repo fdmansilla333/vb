@@ -102,7 +102,7 @@ router.get('/clientes/:id', (req, res) => {
     const buscarId = function (db, id, callback) {
         const collection = db.collection('clientes');
         var consulta = { "_id": new ObjectID(id) };
-        console.log(consulta);
+        // console.log(consulta);
         collection.findOne(consulta, function (err, result) {
             if (err) throw err;
             res.json(result);
